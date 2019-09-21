@@ -25,7 +25,7 @@ public class Character : MonoBehaviour
         Vector3 horizontal = new Vector3(Input.GetAxis("Horizontal"), 0.0f);
         transform.position += horizontal * WalkSpeed * Time.deltaTime;
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetButtonDown("Jump"))
         {
             Debug.Log("Is Jumping lol");
             rb.AddForce(new Vector2(0.0f, JumpHeight), ForceMode2D.Impulse);
