@@ -11,7 +11,10 @@ public class Character : MonoBehaviour
     public float WalkSpeed;
     public float JumpHeight;
 
-
+	public bool isGrounded;
+	public LayerMask isGroundLayer;
+	public Transform groundCheck;
+	public float groundCheckRadius;
 
 	public bool isFacingRight;
 
@@ -26,6 +29,7 @@ public class Character : MonoBehaviour
         WalkSpeed = 10.0f;
         JumpHeight = 10.0f;
 		isFacingRight = true;
+		groundCheckRadius = 0.1f;
     }
 
     // Update is called once per frame
@@ -33,13 +37,17 @@ public class Character : MonoBehaviour
     {
 		float moveDirection = Input.GetAxis("Horizontal");
 
+		isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, isGroundLayer);
 
-		Vector3 horizontal = new Vector3(Input.GetAxis("Horizontal"), 0.0f);
-        transform.position += horizontal * WalkSpeed * Time.deltaTime;
+		
+			Vector3 horizontal = new Vector3(Input.GetAxis("Horizontal"), 0.0f);
+			transform.position += horizontal * WalkSpeed * Time.deltaTime;
 
 		if (anim)
 		{
 			anim.SetFloat("Speed", Mathf.Abs(moveDirection));
+
+			anim.SetBool("isGrounded", isGrounded);
 		}
 
 		if ((moveDirection < 0 && isFacingRight) || moveDirection > 0 && !isFacingRight)
