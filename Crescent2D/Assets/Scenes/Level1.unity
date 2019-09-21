@@ -12244,6 +12244,7 @@ GameObject:
   - component: {fileID: 727103366}
   - component: {fileID: 727103369}
   - component: {fileID: 727103370}
+  - component: {fileID: 727103371}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -12366,6 +12367,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WalkSpeed: 0
   JumpHeight: 0
+--- !u!95 &727103371
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 727103365}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 50931c5343c4553469f44740b1196121, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &795915097
 GameObject:
   m_ObjectHideFlags: 0
