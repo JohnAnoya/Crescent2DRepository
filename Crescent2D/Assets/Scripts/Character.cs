@@ -9,12 +9,15 @@ public class Character : MonoBehaviour
     private Vector2 movePlayerHorizontal;
     private Vector2 movePlayerVertical;
     public float WalkSpeed;
-    public float JumpHeight; 
-    
+    public float JumpHeight;
+
+	private Animator anim;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+		anim = GetComponent<Animator>();
         WalkSpeed = 10.0f;
         JumpHeight = 10.0f; 
     }
@@ -32,5 +35,7 @@ public class Character : MonoBehaviour
         }
      
     }
+
+
 
 }
