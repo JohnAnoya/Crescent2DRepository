@@ -55,7 +55,7 @@ public class Character : MonoBehaviour
 			flip();
 		}
 
-		if (Input.GetButtonDown("Jump"))
+		if (Input.GetButtonDown("Jump") && isGrounded == true)
         {
             Debug.Log("Is Jumping lol");
             rb.AddForce(new Vector2(0.0f, JumpHeight), ForceMode2D.Impulse);
