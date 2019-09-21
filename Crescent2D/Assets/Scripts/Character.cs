@@ -39,7 +39,6 @@ public class Character : MonoBehaviour
 
 		isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, isGroundLayer);
 
-		
 			Vector3 horizontal = new Vector3(Input.GetAxis("Horizontal"), 0.0f);
 			transform.position += horizontal * WalkSpeed * Time.deltaTime;
 
