@@ -57,6 +57,7 @@ public class Character : MonoBehaviour
 		if (Input.GetButtonDown("Jump") && isGrounded == true)
         {
             Debug.Log("Is Jumping lol");
+            anim.Play("PlayerJump");
             rb.AddForce(new Vector2(0.0f, JumpHeight), ForceMode2D.Impulse);
         }
      
@@ -66,11 +67,8 @@ public class Character : MonoBehaviour
 	void flip()
 	{
 		isFacingRight = !isFacingRight;
-
 		Vector3 scaleFactor = transform.localScale;
-
 		scaleFactor.x *= -1;
-
 		transform.localScale = scaleFactor;
 
 	}
