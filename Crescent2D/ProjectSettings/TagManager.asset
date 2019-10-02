@@ -15,6 +15,16 @@ TagManager:
   - Enemy8
   - Enemy9
   - Enemy10
+  - Enemy11
+  - Enemy12
+  - Enemy13
+  - Enemy14
+  - Enemy15
+  - Enemy16
+  - Enemy17
+  - Enemy18
+  - Enemy19
+  - Enemy20
   layers:
   - Default
   - TransparentFX
