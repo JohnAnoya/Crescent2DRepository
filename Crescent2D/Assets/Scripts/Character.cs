@@ -6,7 +6,7 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
 
-    //-- PLAYER VARIABLES --// 
+ //-- PLAYER VARIABLES --// 
     private Animator anim;
     private Rigidbody2D rb;
 
@@ -16,13 +16,16 @@ public class Character : MonoBehaviour
     private Vector2 movePlayerHorizontal;
     private Vector2 movePlayerVertical;
 
-    public float WalkSpeed;
-    public float JumpHeight;
-    public float groundCheckRadius;
+    float WalkSpeed;
+    float JumpHeight;
+    float groundCheckRadius;
+    float FlingDirection;
+
     public GameObject MainCamera;
 
     public bool isGrounded;
     public bool isFacingRight;
+    bool PlayerCanMove; 
  //-- PLAYER VARIABLES --// 
 
 
@@ -41,8 +44,9 @@ public class Character : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 		anim = GetComponent<Animator>();
         WalkSpeed = 10.0f;
-        JumpHeight = 10.0f;
+        JumpHeight = 13.0f;
 		isFacingRight = true;
+        PlayerCanMove = true; 
 		groundCheckRadius = 0.1f;
         //-- SETTING PLAYER VARIABLES --//
 
@@ -61,8 +65,11 @@ public class Character : MonoBehaviour
 
 		isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, isGroundLayer);
 
-			Vector3 horizontal = new Vector3(Input.GetAxis("Horizontal"), 0.0f);
-			transform.position += horizontal * WalkSpeed * Time.deltaTime;
+        if (PlayerCanMove == true)
+        {
+            Vector3 horizontal = new Vector3(Input.GetAxis("Horizontal"), 0.0f);
+            transform.position += horizontal * WalkSpeed * Time.deltaTime;
+        }
 
 		if (anim)
 		{
@@ -93,11 +100,55 @@ public class Character : MonoBehaviour
         {
             Debug.Log("If no camera, then set the camera");
         }
-     
+
+
+        if (Input.GetAxis("Horizontal") < 0)
+        {
+            isFacingRight = false;
+        }
+
+        else if (Input.GetAxis("Horizontal") > 0)
+        {
+            isFacingRight = true;  
+        }
+
     }
 
-	// flips the sprite when player walks left
-	void flip()
+
+     void OnCollisionEnter2D(Collision2D collision)
+    {
+        float distance = collision.gameObject.transform.position.x - gameObject.transform.position.x;
+
+        if (collision.gameObject.tag.Contains("Enemy")) {
+
+            PlayerCanMove = false;
+   
+            if (distance < 0)
+            {
+              FlingDirection = 15.0f;
+            }
+
+            else if (isFacingRight)
+            {
+              FlingDirection = -15.0f;
+            }
+
+            StartCoroutine(Fling());
+        }
+    }
+
+    IEnumerator Fling()
+    {
+        rb.AddForce(new Vector2(FlingDirection + gameObject.transform.position.x * Time.deltaTime, 10.5f), ForceMode2D.Impulse);
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(255, 0, 0);
+        yield return new WaitForSeconds(0.25f);
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(255, 255, 255);
+        yield return new WaitForSeconds(1.0f);
+        PlayerCanMove = true; 
+    }
+
+    // flips the sprite when player walks left
+    void flip()
 	{
 		isFacingRight = !isFacingRight;
 		Vector3 scaleFactor = transform.localScale;
@@ -118,9 +169,7 @@ public class Character : MonoBehaviour
         if (Input.GetKey(KeyCode.Q) && Camera.main.orthographicSize > 2.14f)
         {
             Vector3 Zoom = new Vector3(camx, camy - 2.25f, camz);
-
             MainCamera.transform.position += Zoom * Time.deltaTime;
-
             Camera.main.orthographicSize = Mathf.MoveTowards(Camera.main.orthographicSize, camStart - 10.0f, camTransSpeed * Time.deltaTime);
             // *ANOTHER WAY OF TEMPERING WITH THE CAMERA*
         }

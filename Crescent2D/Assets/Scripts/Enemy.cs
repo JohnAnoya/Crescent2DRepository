@@ -111,10 +111,10 @@ abstract public class Enemy : MonoBehaviour
     {
         if (EnemyAttacking == true)
         {
-            anim.SetBool("Attack", EnemyAttacking);
+           anim.SetBool("Attack", EnemyAttacking);
         }
 
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1.0f);
         EnemyAttacking = false;
         anim.SetBool("Attack", EnemyAttacking);
     }

@@ -20454,7 +20454,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1.7
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 10
   m_GravityScale: 1.5
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -20473,15 +20473,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d80183c83f8ad0144bed30dd577c1fb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WalkSpeed: 0
-  JumpHeight: 0
-  MainCamera: {fileID: 519420028}
-  isGrounded: 0
   isGroundLayer:
     serializedVersion: 2
     m_Bits: 512
   groundCheck: {fileID: 186661602}
-  groundCheckRadius: 0
+  MainCamera: {fileID: 519420028}
+  isGrounded: 0
   isFacingRight: 0
 --- !u!95 &727103371
 Animator:
@@ -26577,6 +26574,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Size.y
       value: 2.5880508
+      objectReference: {fileID: 0}
+    - target: {fileID: 722724364046918103, guid: ad314f73a358b5444811c886b04f1da0,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: d74d4774392896d40a6fa050c16fcaa0, type: 2}
+    - target: {fileID: 722724364046918096, guid: ad314f73a358b5444811c886b04f1da0,
+        type: 3}
+      propertyPath: m_Material
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad314f73a358b5444811c886b04f1da0, type: 3}
