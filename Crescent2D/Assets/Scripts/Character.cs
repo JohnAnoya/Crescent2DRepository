@@ -6,23 +6,23 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
 
- //-- PLAYER VARIABLES --// 
+    //-- PLAYER VARIABLES --// 
+    private Animator anim;
     private Rigidbody2D rb;
+
+    public LayerMask isGroundLayer;
+    public Transform groundCheck;
+
     private Vector2 movePlayerHorizontal;
     private Vector2 movePlayerVertical;
+
     public float WalkSpeed;
     public float JumpHeight;
+    public float groundCheckRadius;
     public GameObject MainCamera;
 
-	public bool isGrounded;
-	public LayerMask isGroundLayer;
-	public Transform groundCheck;
-	public float groundCheckRadius;
-
-	public bool isFacingRight;
-
-	private Animator anim;
-
+    public bool isGrounded;
+    public bool isFacingRight;
  //-- PLAYER VARIABLES --// 
 
 
@@ -32,7 +32,6 @@ public class Character : MonoBehaviour
     float camTransSpeed;
     float camStart;
  //-- CAMERA VARIABLES --// 
-
 
 
     // Start is called before the first frame update
