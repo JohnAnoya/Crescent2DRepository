@@ -2,23 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraScript : MonoBehaviour
+public class GreenSlime : Enemy
 {
-
-    public GameObject Player;
-
-
     // Start is called before the first frame update
     void Start()
     {
-       
+        StartEnemyScript();
     }
 
     // Update is called once per frame
     void Update()
     {
-     
-
-     
+        UpdateEnemyScript();
     }
 }

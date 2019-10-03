@@ -495,7 +495,6 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
-  - component: {fileID: 519420030}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -511,19 +510,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
---- !u!114 &519420030
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 726e875ea5f338742b2eeae05e305476, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Player: {fileID: 727103365}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -20447,7 +20433,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 727103365}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -85.74, y: -2.55, z: 0}
+  m_LocalPosition: {x: -82.47, y: -2.55, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 186661602}
@@ -20489,6 +20475,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WalkSpeed: 0
   JumpHeight: 0
+  MainCamera: {fileID: 519420028}
   isGrounded: 0
   isGroundLayer:
     serializedVersion: 2
@@ -25717,6 +25704,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1119460693 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 722724364046918098, guid: ad314f73a358b5444811c886b04f1da0,
+    type: 3}
+  m_PrefabInstance: {fileID: 2043588967}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1119460694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1119460693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4920d3024ff80d4419c359ef50b97283, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 727103365}
 --- !u!1 &1194940091
 GameObject:
   m_ObjectHideFlags: 0
@@ -26555,7 +26561,7 @@ PrefabInstance:
     - target: {fileID: 722724364046918103, guid: ad314f73a358b5444811c886b04f1da0,
         type: 3}
       propertyPath: m_Offset.x
-      value: 0.22599792
+      value: 0.16781616
       objectReference: {fileID: 0}
     - target: {fileID: 722724364046918103, guid: ad314f73a358b5444811c886b04f1da0,
         type: 3}
@@ -26565,7 +26571,7 @@ PrefabInstance:
     - target: {fileID: 722724364046918103, guid: ad314f73a358b5444811c886b04f1da0,
         type: 3}
       propertyPath: m_Offset.y
-      value: -0.1325562
+      value: -0.0016453266
       objectReference: {fileID: 0}
     - target: {fileID: 722724364046918103, guid: ad314f73a358b5444811c886b04f1da0,
         type: 3}
