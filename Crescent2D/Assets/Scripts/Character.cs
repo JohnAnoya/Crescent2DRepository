@@ -128,7 +128,7 @@ public class Character : MonoBehaviour
               FlingDirection = 15.0f;
             }
 
-            else if (isFacingRight)
+            else if (distance > 0)
             {
               FlingDirection = -15.0f;
             }
