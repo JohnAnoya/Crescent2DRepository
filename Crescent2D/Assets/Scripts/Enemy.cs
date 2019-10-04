@@ -15,16 +15,18 @@ abstract public class Enemy : MonoBehaviour
 
     float speed;
     public float health;
-    float distance;
+    float distance; 
     float leftFollowRange;
     float rightFollowRange;
     float FlingDirection; 
 
     bool isFacingRight;
     bool EnemyFlipped;
-    bool EnemyAttacking; 
+    bool EnemyAttacking;
 
-   public void StartEnemyScript()
+    Vector3 initialPos;
+
+    public void StartEnemyScript()
     {
         distance = 0.0f;
         leftFollowRange = 25.0f;
@@ -39,18 +41,29 @@ abstract public class Enemy : MonoBehaviour
         if (gameObject.tag == "Enemy19")
         {
             speed = 5.0f;
-            health = 100.0f; 
+            health = 100.0f;
+            initialPos.x = gameObject.transform.position.x;
+            initialPos.y = gameObject.transform.position.y;
         }
 
        else if (gameObject.tag == "Enemy5")
         {
-            speed = 25.0f;
-            health = 85.0f;
+            speed = 10.0f;
+            health = 75.0f;
+            initialPos.x = gameObject.transform.position.x;
+            initialPos.y = gameObject.transform.position.y; 
         }
     }
 
    public void UpdateEnemyScript()
     {
+        if (!Player)
+        {
+           Player = GameObject.Find("Player");  
+        }
+
+        else
+
         distance =  gameObject.transform.position.x - Player.transform.position.x;
 
         if (distance > 0.0f && isFacingRight == true)
@@ -68,12 +81,12 @@ abstract public class Enemy : MonoBehaviour
 
         if (distance > 0.0f)
         {
-          FlingDirection = 8.5f;
+          FlingDirection = 3.5f;
         }
 
         else if (distance < 0.0f)
         {
-          FlingDirection = -8.5f;
+          FlingDirection = -3.5f;
         }
 
 
@@ -88,9 +101,16 @@ abstract public class Enemy : MonoBehaviour
             anim.SetBool("Walk", true);
         }
 
+        else if (Player && gameObject.tag == "Enemy5" && distance < leftFollowRange && distance > 0.0f || Player && gameObject.tag == "Enemy5" && distance > rightFollowRange && distance < 0.0f)
+        {
+            gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, Player.transform.position, 1.0f * speed * Time.deltaTime);
+            anim.SetBool("Walk", true);
+        }
+
         else
         {
             anim.SetBool("Walk", false);
+            gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, initialPos, 1.0f * speed * Time.deltaTime);
         }
     }
 

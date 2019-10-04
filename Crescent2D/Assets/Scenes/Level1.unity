@@ -436,7 +436,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 63937470}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -87.21, y: -1.36, z: 0}
+  m_LocalPosition: {x: -203.8, y: -1.36, z: 0}
   m_LocalScale: {x: 0.69760036, y: 0.6490547, z: 0.48545602}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1288,6 +1288,26 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &425335774 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5188114226294309580, guid: 45ab63ec4f4cf1748b5a7b15be488a2c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1764412356}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &425335780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425335774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f0b004675880184dac7ca8ba269f034, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 0}
+  health: 0
 --- !u!1 &460239946
 GameObject:
   m_ObjectHideFlags: 0
@@ -39547,7 +39567,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 727103365}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -82.47, y: -2.55, z: 0}
+  m_LocalPosition: {x: -201.4, y: -2.55, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 186661602}
@@ -46760,7 +46780,7 @@ PrefabInstance:
     - target: {fileID: 5188114226294309569, guid: 45ab63ec4f4cf1748b5a7b15be488a2c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.5174093
+      value: -3.69
       objectReference: {fileID: 0}
     - target: {fileID: 5188114226294309569, guid: 45ab63ec4f4cf1748b5a7b15be488a2c,
         type: 3}
@@ -47358,12 +47378,12 @@ PrefabInstance:
     - target: {fileID: 722724364046918101, guid: ad314f73a358b5444811c886b04f1da0,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -54.5
+      value: -54.6
       objectReference: {fileID: 0}
     - target: {fileID: 722724364046918101, guid: ad314f73a358b5444811c886b04f1da0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.2
+      value: -3.58
       objectReference: {fileID: 0}
     - target: {fileID: 722724364046918101, guid: ad314f73a358b5444811c886b04f1da0,
         type: 3}
