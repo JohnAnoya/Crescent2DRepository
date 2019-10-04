@@ -16,7 +16,8 @@ abstract public class Enemy : MonoBehaviour
     float speed;
     public float health;
     float distance;
-    float followRange;
+    float leftFollowRange;
+    float rightFollowRange;
     float FlingDirection; 
 
     bool isFacingRight;
@@ -26,7 +27,8 @@ abstract public class Enemy : MonoBehaviour
    public void StartEnemyScript()
     {
         distance = 0.0f;
-        followRange = 25.0f;
+        leftFollowRange = 25.0f;
+        rightFollowRange = -25.0f; 
         isFacingRight = true;
         EnemyFlipped = false;
         EnemyAttacking = false; 
@@ -66,12 +68,12 @@ abstract public class Enemy : MonoBehaviour
 
         if (distance > 0.0f)
         {
-          FlingDirection = 3.5f;
+          FlingDirection = 8.5f;
         }
 
         else if (distance < 0.0f)
         {
-          FlingDirection = -3.5f;
+          FlingDirection = -8.5f;
         }
 
 
@@ -80,7 +82,7 @@ abstract public class Enemy : MonoBehaviour
             Debug.Log("There is no player set!");
         }
 
-        else if (Player && gameObject.tag == "Enemy19" && distance < followRange)
+        else if (Player && gameObject.tag == "Enemy19" && distance < leftFollowRange && distance > 0.0f || Player && gameObject.tag == "Enemy19" && distance > rightFollowRange && distance < 0.0f)
         {
             gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, Player.transform.position, 1.0f * speed * Time.deltaTime);
             anim.SetBool("Walk", true);
@@ -145,7 +147,7 @@ abstract public class Enemy : MonoBehaviour
 
     IEnumerator EnemyFling()
     {
-        rb.AddForce(new Vector2(FlingDirection, 0.5f), ForceMode2D.Impulse);
+        rb.AddForce(new Vector2(FlingDirection, 1.5f), ForceMode2D.Impulse);
         gameObject.GetComponent<SpriteRenderer>().color = new Color(255, 0, 0);
         yield return new WaitForSeconds(0.25f);
         gameObject.GetComponent<SpriteRenderer>().color = new Color(255, 255, 255);
