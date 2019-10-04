@@ -25,6 +25,7 @@ TagManager:
   - Enemy18
   - Enemy19
   - Enemy20
+  - BasicSwordAttack
   layers:
   - Default
   - TransparentFX
@@ -62,7 +63,16 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Sun
+    uniqueID: 3042385929
+    locked: 0
   - name: Background
+    uniqueID: 1388305751
+    locked: 0
+  - name: WindmillFan
+    uniqueID: 3236393697
+    locked: 0
+  - name: Foreground
     uniqueID: 773076421
     locked: 0
   - name: Tilemap

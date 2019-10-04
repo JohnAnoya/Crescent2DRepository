@@ -25,7 +25,7 @@ public class Character : MonoBehaviour
 
     public bool isGrounded;
     public bool isFacingRight;
-    bool PlayerCanMove; 
+    bool PlayerCanMove;
  //-- PLAYER VARIABLES --// 
 
 
@@ -46,7 +46,7 @@ public class Character : MonoBehaviour
         WalkSpeed = 10.0f;
         JumpHeight = 13.0f;
 		isFacingRight = true;
-        PlayerCanMove = true; 
+        PlayerCanMove = true;
 		groundCheckRadius = 0.1f;
         //-- SETTING PLAYER VARIABLES --//
 
@@ -89,6 +89,15 @@ public class Character : MonoBehaviour
             anim.Play("PlayerJump");
             rb.AddForce(new Vector2(0.0f, JumpHeight), ForceMode2D.Impulse);
         }
+
+        //-- PLAYER ATTACKING IF STATEMENTS (BOTH KEYBOARD/CONTROLLER) --// 
+        if (Input.GetButtonDown("Fire1"))
+        {
+            gameObject.transform.GetChild(1).GetComponent<BoxCollider2D>().enabled = true;
+            anim.SetBool("QuickAttack", true);
+            StartCoroutine(DisableSwordCollider()); 
+        }
+        //-- PLAYER ATTACKING IF STATEMENTS (BOTH KEYBOARD/CONTROLLER) --// 
 
         if (MainCamera)
         {
@@ -137,16 +146,6 @@ public class Character : MonoBehaviour
         }
     }
 
-    IEnumerator Fling()
-    {
-        rb.AddForce(new Vector2(FlingDirection + gameObject.transform.position.x * Time.deltaTime, 10.5f), ForceMode2D.Impulse);
-        gameObject.GetComponent<SpriteRenderer>().color = new Color(255, 0, 0);
-        yield return new WaitForSeconds(0.25f);
-        gameObject.GetComponent<SpriteRenderer>().color = new Color(255, 255, 255);
-        yield return new WaitForSeconds(1.0f);
-        PlayerCanMove = true; 
-    }
-
     // flips the sprite when player walks left
     void flip()
 	{
@@ -155,6 +154,8 @@ public class Character : MonoBehaviour
 		scaleFactor.x *= -1;
 		transform.localScale = scaleFactor;
 	}
+
+    //-- CAMERA FUNCTIONS --// 
 
     void CameraScale()
     {
@@ -187,5 +188,25 @@ public class Character : MonoBehaviour
     {
 
     }
+    //-- CAMERA FUNCTIONS --// 
 
+
+    //-- COROUTINES --// 
+    IEnumerator Fling()
+    {
+        rb.AddForce(new Vector2(FlingDirection + gameObject.transform.position.x * Time.deltaTime, 10.5f), ForceMode2D.Impulse);
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(255, 0, 0);
+        yield return new WaitForSeconds(0.25f);
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(255, 255, 255);
+        yield return new WaitForSeconds(1.0f);
+        PlayerCanMove = true;
+    }
+
+    IEnumerator DisableSwordCollider()
+    {
+        yield return new WaitForSeconds(0.1f);
+        gameObject.transform.GetChild(1).GetComponent<BoxCollider2D>().enabled = false;
+        anim.SetBool("QuickAttack", false);
+    }
+    //-- COROUTINES --// 
 }

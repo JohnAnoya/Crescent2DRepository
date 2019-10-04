@@ -14,9 +14,10 @@ abstract public class Enemy : MonoBehaviour
     Animator anim; 
 
     float speed;
-    float health;
+    public float health;
     float distance;
     float followRange;
+    float FlingDirection; 
 
     bool isFacingRight;
     bool EnemyFlipped;
@@ -49,7 +50,6 @@ abstract public class Enemy : MonoBehaviour
    public void UpdateEnemyScript()
     {
         distance =  gameObject.transform.position.x - Player.transform.position.x;
-        Debug.Log(distance);
 
         if (distance > 0.0f && isFacingRight == true)
         {
@@ -59,9 +59,21 @@ abstract public class Enemy : MonoBehaviour
 
         else if (distance < 0.0f && isFacingRight == false)
         {
+           
             isFacingRight = true;
             FlipEnemy();
         }
+
+        if (distance > 0.0f)
+        {
+          FlingDirection = 3.5f;
+        }
+
+        else if (distance < 0.0f)
+        {
+          FlingDirection = -3.5f;
+        }
+
 
         if (!Player)
         {
@@ -77,6 +89,18 @@ abstract public class Enemy : MonoBehaviour
         else
         {
             anim.SetBool("Walk", false);
+        }
+    }
+
+
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "BasicSwordAttack")
+        {
+            health = health - Random.Range(5.0f, 20.0f);
+            anim.SetTrigger("Hit");
+            StartCoroutine(EnemyFling());
         }
     }
 
@@ -117,6 +141,14 @@ abstract public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
         EnemyAttacking = false;
         anim.SetBool("Attack", EnemyAttacking);
+    }
+
+    IEnumerator EnemyFling()
+    {
+        rb.AddForce(new Vector2(FlingDirection, 0.5f), ForceMode2D.Impulse);
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(255, 0, 0);
+        yield return new WaitForSeconds(0.25f);
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(255, 255, 255);
     }
 }
 
