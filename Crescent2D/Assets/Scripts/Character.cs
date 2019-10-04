@@ -91,7 +91,7 @@ public class Character : MonoBehaviour
         }
 
         //-- PLAYER ATTACKING IF STATEMENTS (BOTH KEYBOARD/CONTROLLER) --// 
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") || Input.GetKey(KeyCode.Joystick1Button10))
         {
             gameObject.transform.GetChild(1).GetComponent<BoxCollider2D>().enabled = true;
             anim.SetBool("QuickAttack", true);
