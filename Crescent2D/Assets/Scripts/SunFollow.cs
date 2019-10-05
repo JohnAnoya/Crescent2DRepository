@@ -17,7 +17,7 @@ public class SunFollow : MonoBehaviour
     {
         if (Player)
         {
-            this.transform.position = new Vector3(Player.transform.position.x + 25.0f, this.transform.position.y, this.transform.position.z);
+            this.transform.position = new Vector3(Player.transform.position.x + 25.0f,  Player.transform.position.y + 12.0f, this.transform.position.z);
         }
     }
 }

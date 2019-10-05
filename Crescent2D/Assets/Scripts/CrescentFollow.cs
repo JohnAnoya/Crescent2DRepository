@@ -20,7 +20,7 @@ public class CrescentFollow : MonoBehaviour
     {
         if (Player)
         {
-            this.transform.position = new Vector3(Player.transform.position.x - 2.0f, Mathf.PingPong(Time.time, NewPosition) - Subtractor * NewPosition, this.transform.position.z);
+            this.transform.position = new Vector3(Player.transform.position.x - 2.0f, Player.transform.position.y + 3.0f + Mathf.PingPong(Time.time, NewPosition) - Subtractor * NewPosition, this.transform.position.z);
         }
     }
 }
