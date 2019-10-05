@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class Character : MonoBehaviour
@@ -26,6 +27,7 @@ public class Character : MonoBehaviour
     public bool isGrounded;
     public bool isFacingRight;
     bool PlayerCanMove;
+    bool HasKey; 
  //-- PLAYER VARIABLES --// 
 
 
@@ -47,6 +49,7 @@ public class Character : MonoBehaviour
         JumpHeight = 13.0f;
 		isFacingRight = true;
         PlayerCanMove = true;
+        HasKey = false; 
 		groundCheckRadius = 0.1f;
         //-- SETTING PLAYER VARIABLES --//
 
@@ -146,6 +149,21 @@ public class Character : MonoBehaviour
         }
     }
 
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+       if (collision.gameObject.tag == "Key")
+        {
+            HasKey = true;
+            Destroy(collision.gameObject);
+        }
+
+        else if (collision.gameObject.tag == "LockedDoor" && HasKey == true && SceneManager.GetActiveScene().buildIndex < 6)
+        {
+            SceneManager.LoadScene("Map1");
+        }
+    }
+
     // flips the sprite when player walks left
     void flip()
 	{
@@ -159,7 +177,7 @@ public class Character : MonoBehaviour
 
     void CameraScale()
     {
-        if (Input.GetKey(KeyCode.E) && Camera.main.orthographicSize < 15.0f)
+        if (Input.GetKey(KeyCode.E) && Camera.main.orthographicSize < 15.0f || Input.GetButton("RightBumper") && Camera.main.orthographicSize < 15.0f)
         {
             Vector3 Zoom = new Vector3(camx, camy + 2.25f, camz);
             MainCamera.transform.position += Zoom * Time.deltaTime;
@@ -167,7 +185,7 @@ public class Character : MonoBehaviour
             // *ANOTHER WAY OF TEMPERING WITH THE CAMERA*
         }
 
-        if (Input.GetKey(KeyCode.Q) && Camera.main.orthographicSize > 2.14f)
+        if (Input.GetKey(KeyCode.Q) && Camera.main.orthographicSize > 2.14f || Input.GetButton("LeftBumper") && Camera.main.orthographicSize > 2.14f)
         {
             Vector3 Zoom = new Vector3(camx, camy - 2.25f, camz);
             MainCamera.transform.position += Zoom * Time.deltaTime;

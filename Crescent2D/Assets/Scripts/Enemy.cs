@@ -15,7 +15,8 @@ abstract public class Enemy : MonoBehaviour
 
     float speed;
     public float health;
-    float distance; 
+    float distance;
+    float height;
     float leftFollowRange;
     float rightFollowRange;
     float FlingDirection; 
@@ -23,17 +24,20 @@ abstract public class Enemy : MonoBehaviour
     bool isFacingRight;
     bool EnemyFlipped;
     bool EnemyAttacking;
+    bool EnemyJump; 
 
     Vector3 initialPos;
 
     public void StartEnemyScript()
     {
         distance = 0.0f;
+        height = 0.0f; 
         leftFollowRange = 25.0f;
         rightFollowRange = -25.0f; 
         isFacingRight = true;
         EnemyFlipped = false;
-        EnemyAttacking = false; 
+        EnemyAttacking = false;
+        EnemyJump = false; 
 
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
@@ -65,6 +69,7 @@ abstract public class Enemy : MonoBehaviour
         else
 
         distance =  gameObject.transform.position.x - Player.transform.position.x;
+        height = Player.transform.position.y - gameObject.transform.position.y;
 
         if (distance > 0.0f && isFacingRight == true)
         {
@@ -99,6 +104,13 @@ abstract public class Enemy : MonoBehaviour
         {
             gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, Player.transform.position, 1.0f * speed * Time.deltaTime);
             anim.SetBool("Walk", true);
+
+            if (height > 0.0f && EnemyJump == false)
+            {
+                rb.AddForce(new Vector2(0.0f, 5.5f), ForceMode2D.Impulse);
+                EnemyJump = true;
+                StartCoroutine(EnemyCanJump());
+            } 
         }
 
         else if (Player && gameObject.tag == "Enemy5" && distance < leftFollowRange && distance > 0.0f || Player && gameObject.tag == "Enemy5" && distance > rightFollowRange && distance < 0.0f)
@@ -171,6 +183,12 @@ abstract public class Enemy : MonoBehaviour
         gameObject.GetComponent<SpriteRenderer>().color = new Color(255, 0, 0);
         yield return new WaitForSeconds(0.25f);
         gameObject.GetComponent<SpriteRenderer>().color = new Color(255, 255, 255);
+    }
+
+    IEnumerator EnemyCanJump()
+    {
+        yield return new WaitForSeconds(1.0f);
+        EnemyJump = false; 
     }
 }
 

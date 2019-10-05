@@ -26,6 +26,9 @@ TagManager:
   - Enemy19
   - Enemy20
   - BasicSwordAttack
+  - LockedDoor
+  - Key
+  - Level
   layers:
   - Default
   - TransparentFX
