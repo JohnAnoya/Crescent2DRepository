@@ -27,9 +27,12 @@ public class Character : MonoBehaviour
     public bool isGrounded;
     public bool isFacingRight;
     bool PlayerCanMove;
-    bool HasKey; 
- //-- PLAYER VARIABLES --// 
+    bool HasKey;
+	//-- PLAYER VARIABLES --// 
 
+	public AudioSource playerHurtSnd;
+	public AudioSource playerJumpSnd;
+	public AudioSource playerLightAttackSnd;
 
  //-- CAMERA VARIABLES --// 
     private bool FollowPlayer;
@@ -91,6 +94,7 @@ public class Character : MonoBehaviour
             Debug.Log("Is Jumping lol");
             anim.Play("PlayerJump");
             rb.AddForce(new Vector2(0.0f, JumpHeight), ForceMode2D.Impulse);
+			playerJumpSnd.Play();
         }
 
         //-- PLAYER ATTACKING IF STATEMENTS (BOTH KEYBOARD/CONTROLLER) --// 
@@ -98,7 +102,9 @@ public class Character : MonoBehaviour
         {
             gameObject.transform.GetChild(1).GetComponent<BoxCollider2D>().enabled = true;
             anim.SetBool("QuickAttack", true);
-            StartCoroutine(DisableSwordCollider()); 
+			playerLightAttackSnd.Play();
+			StartCoroutine(DisableSwordCollider()); 
+			
         }
         //-- PLAYER ATTACKING IF STATEMENTS (BOTH KEYBOARD/CONTROLLER) --// 
 
@@ -134,7 +140,9 @@ public class Character : MonoBehaviour
         if (collision.gameObject.tag.Contains("Enemy")) {
 
             PlayerCanMove = false;
-   
+
+			playerHurtSnd.Play();
+
             if (distance < 0)
             {
               FlingDirection = 15.0f;
@@ -224,7 +232,7 @@ public class Character : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         gameObject.transform.GetChild(1).GetComponent<BoxCollider2D>().enabled = false;
-        anim.SetBool("QuickAttack", false);
+		anim.SetBool("QuickAttack", false);
     }
     //-- COROUTINES --// 
 }

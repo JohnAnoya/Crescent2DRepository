@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GreenSlime : Enemy
 {
+	public AudioSource slimeHitSnd;
+
     Animator anim; 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +21,7 @@ public class GreenSlime : Enemy
 
         if (health <= 0.0f)
         {
+			slimeHitSnd.Play();
             Destroy(gameObject);
         }
     }

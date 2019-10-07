@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class FlyingGreenSlime : Enemy
 {
+
+	public AudioSource flyingSlimeHitSnd;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +20,7 @@ public class FlyingGreenSlime : Enemy
 
         if (health <= 0.0f)
         {
+			flyingSlimeHitSnd.Play();
             Destroy(gameObject);
         }
     }
