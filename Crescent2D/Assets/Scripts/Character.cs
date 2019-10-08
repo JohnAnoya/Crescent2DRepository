@@ -30,12 +30,15 @@ public class Character : MonoBehaviour
     bool HasKey;
 	//-- PLAYER VARIABLES --// 
 
-	public AudioSource playerHurtSnd;
-	public AudioSource playerJumpSnd;
-	public AudioSource playerLightAttackSnd;
+	//-- PLAYER AUDIO --// 
+	public AudioClip playerJumpSnd;
 
- //-- CAMERA VARIABLES --// 
-    private bool FollowPlayer;
+	public AudioClip playerLightAttackSnd;
+	public AudioClip playerHurtSnd;
+	//-- PLAYER AUDIO --//
+
+	//-- CAMERA VARIABLES --// 
+	private bool FollowPlayer;
     float camx, camy, camz = 0.0f;
     float camTransSpeed;
     float camStart;
@@ -75,7 +78,7 @@ public class Character : MonoBehaviour
         {
             Vector3 horizontal = new Vector3(Input.GetAxis("Horizontal"), 0.0f);
             transform.position += horizontal * WalkSpeed * Time.deltaTime;
-        }
+		}
 
 		if (anim)
 		{
@@ -94,18 +97,19 @@ public class Character : MonoBehaviour
             Debug.Log("Is Jumping lol");
             anim.Play("PlayerJump");
             rb.AddForce(new Vector2(0.0f, JumpHeight), ForceMode2D.Impulse);
-			playerJumpSnd.Play();
-        }
+			AudioManager.instance.alterPitchEffect(playerJumpSnd, playerJumpSnd);
+
+		}
 
         //-- PLAYER ATTACKING IF STATEMENTS (BOTH KEYBOARD/CONTROLLER) --// 
         if (Input.GetButtonDown("Fire1") || Input.GetKey(KeyCode.Joystick1Button10))
         {
             gameObject.transform.GetChild(1).GetComponent<BoxCollider2D>().enabled = true;
             anim.SetBool("QuickAttack", true);
-			playerLightAttackSnd.Play();
-			StartCoroutine(DisableSwordCollider()); 
 			
-        }
+			StartCoroutine(DisableSwordCollider());
+			AudioManager.instance.alterPitchEffect(playerLightAttackSnd, playerLightAttackSnd);
+		}
         //-- PLAYER ATTACKING IF STATEMENTS (BOTH KEYBOARD/CONTROLLER) --// 
 
         if (MainCamera)
@@ -141,8 +145,6 @@ public class Character : MonoBehaviour
 
             PlayerCanMove = false;
 
-			playerHurtSnd.Play();
-
             if (distance < 0)
             {
               FlingDirection = 15.0f;
@@ -154,6 +156,8 @@ public class Character : MonoBehaviour
             }
 
             StartCoroutine(Fling());
+
+			AudioManager.instance.alterPitchEffect(playerHurtSnd, playerHurtSnd);
         }
     }
 
@@ -234,5 +238,6 @@ public class Character : MonoBehaviour
         gameObject.transform.GetChild(1).GetComponent<BoxCollider2D>().enabled = false;
 		anim.SetBool("QuickAttack", false);
     }
-    //-- COROUTINES --// 
+	//-- COROUTINES --// 
+
 }
