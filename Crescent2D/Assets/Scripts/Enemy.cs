@@ -13,7 +13,7 @@ abstract public class Enemy : MonoBehaviour
     Rigidbody2D rb;
     Animator anim; 
 
-    float speed;
+    public float speed;
     public float health;
     float distance;
     float height;
@@ -24,9 +24,9 @@ abstract public class Enemy : MonoBehaviour
     bool isFacingRight;
     bool EnemyFlipped;
     bool EnemyAttacking;
-    bool EnemyJump; 
+    bool EnemyJumpDebounce;
 
-    Vector3 initialPos;
+    public Vector3 initialPos;
 
     public void StartEnemyScript()
     {
@@ -37,26 +37,10 @@ abstract public class Enemy : MonoBehaviour
         isFacingRight = true;
         EnemyFlipped = false;
         EnemyAttacking = false;
-        EnemyJump = false; 
+        EnemyJumpDebounce = false; 
 
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-
-        if (gameObject.tag == "Enemy19")
-        {
-            speed = 5.0f;
-            health = 100.0f;
-            initialPos.x = gameObject.transform.position.x;
-            initialPos.y = gameObject.transform.position.y;
-        }
-
-       else if (gameObject.tag == "Enemy5")
-        {
-            speed = 10.0f;
-            health = 75.0f;
-            initialPos.x = gameObject.transform.position.x;
-            initialPos.y = gameObject.transform.position.y; 
-        }
     }
 
    public void UpdateEnemyScript()
@@ -94,29 +78,22 @@ abstract public class Enemy : MonoBehaviour
           FlingDirection = -3.5f;
         }
 
-
         if (!Player)
         {
-            Debug.Log("There is no player set!");
+            Debug.Log("There is no player to follow!");
         }
 
-        else if (Player && gameObject.tag == "Enemy19" && distance < leftFollowRange && distance > 0.0f || Player && gameObject.tag == "Enemy19" && distance > rightFollowRange && distance < 0.0f)
+        else if (Player && gameObject.tag.Contains("Enemy") && distance < leftFollowRange && distance > 0.0f || Player && gameObject.tag.Contains("Enemy") && distance > rightFollowRange && distance < 0.0f)
         {
             gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, Player.transform.position, 1.0f * speed * Time.deltaTime);
             anim.SetBool("Walk", true);
 
-            if (height > 0.0f && EnemyJump == false)
+            if (height > 1.5f && EnemyJumpDebounce == false)
             {
                 rb.AddForce(new Vector2(0.0f, 5.5f), ForceMode2D.Impulse);
-                EnemyJump = true;
+                EnemyJumpDebounce = true;
                 StartCoroutine(EnemyCanJump());
-            } 
-        }
-
-        else if (Player && gameObject.tag == "Enemy5" && distance < leftFollowRange && distance > 0.0f || Player && gameObject.tag == "Enemy5" && distance > rightFollowRange && distance < 0.0f)
-        {
-            gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, Player.transform.position, 1.0f * speed * Time.deltaTime);
-            anim.SetBool("Walk", true);
+            }
         }
 
         else
@@ -188,7 +165,7 @@ abstract public class Enemy : MonoBehaviour
     IEnumerator EnemyCanJump()
     {
         yield return new WaitForSeconds(1.0f);
-        EnemyJump = false; 
+        EnemyJumpDebounce = false; 
     }
 }
 

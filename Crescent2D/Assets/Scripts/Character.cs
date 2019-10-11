@@ -23,6 +23,7 @@ public class Character : MonoBehaviour
     float FlingDirection;
 
     public GameObject MainCamera;
+    public GameObject CameraHolder; 
 
     public bool isGrounded;
     public bool isFacingRight;
@@ -38,10 +39,13 @@ public class Character : MonoBehaviour
 	//-- PLAYER AUDIO --//
 
 	//-- CAMERA VARIABLES --// 
-	private bool FollowPlayer;
+	private bool CameraFollowPlayer;
     float camx, camy, camz = 0.0f;
     float camTransSpeed;
     float camStart;
+    float camShakeSpeed;
+    float ShakeDuration;
+    float ShakeMagnitude; 
  //-- CAMERA VARIABLES --// 
 
 
@@ -61,9 +65,12 @@ public class Character : MonoBehaviour
 
 
         //-- SETTING CAMERA VARIABLES --// 
-        FollowPlayer = true;
+        CameraFollowPlayer = true;
         camTransSpeed = 12.0f;
+        camShakeSpeed = 3.0f; 
         camStart = Camera.main.orthographicSize;
+        ShakeDuration = 0.4f;
+        ShakeMagnitude = 0.6f; 
         //-- SETTING CAMERA VARIABLES --// 
     }
 
@@ -120,7 +127,13 @@ public class Character : MonoBehaviour
 
         else if (!MainCamera)
         {
-            Debug.Log("If no camera, then set the camera");
+            Debug.Log("No camera, setting the camera");
+            MainCamera = GameObject.Find("Camera/Main Camera");
+        }
+
+        if (!CameraHolder)
+        {
+            CameraHolder = GameObject.Find("Camera");
         }
 
 
@@ -144,6 +157,7 @@ public class Character : MonoBehaviour
         if (collision.gameObject.tag.Contains("Enemy")) {
 
             PlayerCanMove = false;
+            CameraShake();
 
             if (distance < 0)
             {
@@ -208,7 +222,7 @@ public class Character : MonoBehaviour
 
     void CameraFollow()
     {
-        if (FollowPlayer == true)
+        if (CameraFollowPlayer == true)
         {
             MainCamera.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, MainCamera.transform.position.z);
         }
@@ -216,7 +230,8 @@ public class Character : MonoBehaviour
 
     void CameraShake()
     {
-
+        CameraHolder.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, MainCamera.transform.position.z);
+        StartCoroutine(CameraShaking());
     }
     //-- CAMERA FUNCTIONS --// 
 
@@ -238,6 +253,26 @@ public class Character : MonoBehaviour
         gameObject.transform.GetChild(1).GetComponent<BoxCollider2D>().enabled = false;
 		anim.SetBool("QuickAttack", false);
     }
-	//-- COROUTINES --// 
+
+    IEnumerator CameraShaking()
+    {
+        Vector3 initialPos = MainCamera.transform.localPosition;
+        Vector2 newPos; 
+
+        float elapsedTime = 0.0f;
+
+        while (elapsedTime < ShakeDuration)
+        {
+            newPos.x = Random.Range(-1.0f, 1.0f) * ShakeMagnitude;
+            newPos.y = Random.Range(-1.0f, 1.0f) * ShakeMagnitude;
+
+            MainCamera.transform.localPosition = new Vector3(newPos.x, newPos.y, initialPos.z);
+            elapsedTime += Time.deltaTime;
+
+            yield return null; 
+        }
+    }
+        
+    //-- COROUTINES --// 
 
 }
