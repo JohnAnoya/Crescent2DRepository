@@ -10,7 +10,8 @@ public class Character : MonoBehaviour
     private Animator anim;
     private Rigidbody2D rb;
 
-    public Rigidbody2D DashEffect; 
+    public Rigidbody2D DashEffect;
+    public Rigidbody2D PowerupEffect; 
 
     public LayerMask isGroundLayer;
     public Transform groundCheck;
@@ -176,7 +177,7 @@ public class Character : MonoBehaviour
             Rigidbody2D DashEffectSource = Instantiate(DashEffect, gameObject.transform.position, gameObject.transform.rotation);
             DashEffectSource.transform.parent = gameObject.transform;
 
-            rb.velocity = new Vector2(7.5f, 0.0f);
+            rb.velocity = new Vector2(10.5f, 0.0f);
             ShakeDuration = 0.4f;
             ShakeMagnitude = 0.12f; 
             CameraShake();
@@ -187,10 +188,23 @@ public class Character : MonoBehaviour
             Rigidbody2D DashEffectSource = Instantiate(DashEffect, gameObject.transform.position, gameObject.transform.rotation);
             DashEffectSource.transform.parent = gameObject.transform;
 
-            rb.velocity = new Vector2(-7.5f, 0.0f);
+            rb.velocity = new Vector2(-10.5f, 0.0f);
             ShakeDuration = 0.4f;
             ShakeMagnitude = 0.12f;
             CameraShake();
+        }
+
+        if (Input.GetKeyDown(KeyCode.R) && PowerUpCount == 3)
+        {
+            Debug.Log(PowerUpCount);
+            Rigidbody2D PowerupEffectSource = Instantiate(PowerupEffect, gameObject.transform.position, gameObject.transform.rotation);
+            PowerupEffectSource.transform.parent = gameObject.transform;
+            anim.runtimeAnimatorController = Resources.Load("Animations/GunAnim") as RuntimeAnimatorController;
+
+            ShakeDuration = 1.5f; 
+            CameraShake();
+
+            StartCoroutine(StopGunPowerUp());
         }
         //-- PLAYER MOVEMENT MECHANICS STATEMENTS (BOTH KEYBOARD/CONTROLLER) --// 
 
@@ -426,6 +440,14 @@ public class Character : MonoBehaviour
         }
     }
 
+    IEnumerator StopGunPowerUp()
+    {
+        yield return new WaitForSeconds(30.0f);
+        ShakeDuration = 0.8f;
+        CameraShake();
+        PowerUpCount = 0;
+        anim.runtimeAnimatorController = Resources.Load("Animations/Player") as RuntimeAnimatorController;
+    }
     //-- COROUTINES --// 
 
 }

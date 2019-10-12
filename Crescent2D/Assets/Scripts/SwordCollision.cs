@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SwordCollision : Character
+public class SwordCollision : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -22,9 +22,12 @@ public class SwordCollision : Character
 
         if (collision.gameObject.tag == "Parry")
         {
-            Destroy(collision.gameObject);
-            PowerUpCount++;
-            Debug.Log("Powerup is at " + PowerUpCount);
+          Destroy(collision.gameObject);
+
+            if (GameObject.Find("Player").GetComponent<Character>().PowerUpCount < 4)
+            {
+                GameObject.Find("Player").GetComponent<Character>().PowerUpCount += 1;
+            }
         }
     } 
 }
