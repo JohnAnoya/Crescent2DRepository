@@ -10,6 +10,8 @@ public class Character : MonoBehaviour
     private Animator anim;
     private Rigidbody2D rb;
 
+    public Rigidbody2D DashEffect; 
+
     public LayerMask isGroundLayer;
     public Transform groundCheck;
 
@@ -21,6 +23,8 @@ public class Character : MonoBehaviour
     float groundCheckRadius;
     float FlingDirection;
 
+    public int PowerUpCount; 
+
     public GameObject MainCamera;
     public GameObject CameraHolder;
     public GameObject Crescent; 
@@ -29,6 +33,7 @@ public class Character : MonoBehaviour
     public bool isFacingRight;
     bool PlayerCanMove;
     bool HasKey;
+    bool isCrouching; 
 	//-- PLAYER VARIABLES --// 
 
 	//-- PLAYER AUDIO --// 
@@ -65,14 +70,21 @@ public class Character : MonoBehaviour
     void Start()
     {
         //-- SETTING PLAYER VARIABLES --//
+
         rb = GetComponent<Rigidbody2D>();
 		anim = GetComponent<Animator>();
+
+        PowerUpCount = 0; 
+
         WalkSpeed = 10.0f;
         JumpHeight = 13.0f;
-		isFacingRight = true;
+        groundCheckRadius = 0.1f;
+
+        isFacingRight = true;
         PlayerCanMove = true;
-        HasKey = false; 
-		groundCheckRadius = 0.1f;
+
+        HasKey = false;
+        isCrouching = false;
         //-- SETTING PLAYER VARIABLES --//
 
         //-- SETTING CRESCENT VARIABLES --// 
@@ -158,8 +170,33 @@ public class Character : MonoBehaviour
         //-- PLAYER ATTACKING IF STATEMENTS (BOTH KEYBOARD/CONTROLLER) --// 
 
 
+        //-- PLAYER MOVEMENT MECHANICS STATEMENTS (BOTH KEYBOARD/CONTROLLER) --// 
+        if (Input.GetKeyDown(KeyCode.F) && isFacingRight && isCrouching == false && isGrounded == false || Input.GetButtonDown("Dash") && isFacingRight && isCrouching == false && isGrounded == false)
+        {
+            Rigidbody2D DashEffectSource = Instantiate(DashEffect, gameObject.transform.position, gameObject.transform.rotation);
+            DashEffectSource.transform.parent = gameObject.transform;
+
+            rb.velocity = new Vector2(7.5f, 0.0f);
+            ShakeDuration = 0.4f;
+            ShakeMagnitude = 0.12f; 
+            CameraShake();
+        }
+
+        else if (Input.GetKeyDown(KeyCode.F) && !isFacingRight && isCrouching == false && isGrounded == false || Input.GetButtonDown("Dash") && !isFacingRight && isCrouching == false && isGrounded == false)
+        {
+            Rigidbody2D DashEffectSource = Instantiate(DashEffect, gameObject.transform.position, gameObject.transform.rotation);
+            DashEffectSource.transform.parent = gameObject.transform;
+
+            rb.velocity = new Vector2(-7.5f, 0.0f);
+            ShakeDuration = 0.4f;
+            ShakeMagnitude = 0.12f;
+            CameraShake();
+        }
+        //-- PLAYER MOVEMENT MECHANICS STATEMENTS (BOTH KEYBOARD/CONTROLLER) --// 
+
+
         //-- CRESCENT LIGHT TRANSFORM IF STATEMENTS (BOTH KEYBOARD/CONTROLLER) --// 
-        if (Input.GetKey(KeyCode.F) && CrescentCanLight == true || Input.GetButtonDown("CrescentTransform") && CrescentCanLight == true)
+        if (Input.GetKey(KeyCode.V) && CrescentCanLight == true || Input.GetButtonDown("CrescentTransform") && CrescentCanLight == true)
         {
             CrescentCanLight = false;
             CrescentCanFollow = false;
@@ -177,7 +214,7 @@ public class Character : MonoBehaviour
             CameraShake();
         }
 
-        else if (Input.GetKey(KeyCode.F) && CrescentCanLight == false || Input.GetButtonDown("CrescentTransform") && CrescentCanLight == false)
+        else if (Input.GetKey(KeyCode.V) && CrescentCanLight == false || Input.GetButtonDown("CrescentTransform") && CrescentCanLight == false)
         {
             StartCoroutine(StopCrescentLight());
         }
@@ -313,13 +350,13 @@ public class Character : MonoBehaviour
             MainCamera.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, MainCamera.transform.position.z);
         }
 
-        else if (CameraFollowCrescent == true)
+        else if (CameraFollowCrescent == true && Crescent)
         {
             MainCamera.transform.position = new Vector3(Crescent.transform.position.x, Crescent.transform.position.y, MainCamera.transform.position.z);
         }
     }
 
-    void CameraShake()
+    public void CameraShake()
     {
         CameraHolder.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, MainCamera.transform.position.z);
         StartCoroutine(CameraShaking());
@@ -363,7 +400,8 @@ public class Character : MonoBehaviour
             yield return null; 
         }
 
-        ShakeDuration = 0.4f; 
+        ShakeDuration = 0.4f;
+        ShakeMagnitude = 0.6f; 
     }
 
     IEnumerator CrescentLightMove()
