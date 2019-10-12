@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
 public class Character : MonoBehaviour
 {
 
@@ -23,7 +22,8 @@ public class Character : MonoBehaviour
     float FlingDirection;
 
     public GameObject MainCamera;
-    public GameObject CameraHolder; 
+    public GameObject CameraHolder;
+    public GameObject Crescent; 
 
     public bool isGrounded;
     public bool isFacingRight;
@@ -36,18 +36,30 @@ public class Character : MonoBehaviour
 
 	public AudioClip playerLightAttackSnd;
 	public AudioClip playerHurtSnd;
-	//-- PLAYER AUDIO --//
+    //-- PLAYER AUDIO --//
 
-	//-- CAMERA VARIABLES --// 
-	private bool CameraFollowPlayer;
+    //-- CRESCENT VARIABLES --// 
+    float NewPosition;
+    const float Subtractor = 1.5f;
+
+    public Rigidbody2D CrescentLight;
+
+    bool CrescentCanLight;
+    bool CrescentCanMove;
+    bool CrescentCanFollow; 
+    //-- CRESCENT VARIABLES --// 
+
+    //-- CAMERA VARIABLES --// 
+    private bool CameraFollowPlayer;
+    private bool CameraFollowCrescent; 
     float camx, camy, camz = 0.0f;
     float camTransSpeed;
     float camStart;
     float camShakeSpeed;
     float ShakeDuration;
     float ShakeMagnitude; 
- //-- CAMERA VARIABLES --// 
-
+    //-- CAMERA VARIABLES --// 
+    
 
     // Start is called before the first frame update
     void Start()
@@ -63,9 +75,29 @@ public class Character : MonoBehaviour
 		groundCheckRadius = 0.1f;
         //-- SETTING PLAYER VARIABLES --//
 
+        //-- SETTING CRESCENT VARIABLES --// 
+
+        NewPosition = 1.0f; //Setting a default variable number to avoid errors with Mathf.PingPong 
+
+        if (!Crescent)
+        {
+          Crescent = GameObject.Find("Crescent");
+        }
+
+        else if (Crescent)
+        {
+            NewPosition = Crescent.transform.position.y + 3.0f;
+        }
+
+        CrescentCanFollow = true; 
+        CrescentCanLight = true;
+        CrescentCanMove = false;
+        //-- SETTING CRESCENT VARIABLES --// 
+
 
         //-- SETTING CAMERA VARIABLES --// 
         CameraFollowPlayer = true;
+        CameraFollowCrescent = false; 
         camTransSpeed = 12.0f;
         camShakeSpeed = 3.0f; 
         camStart = Camera.main.orthographicSize;
@@ -86,6 +118,12 @@ public class Character : MonoBehaviour
             Vector3 horizontal = new Vector3(Input.GetAxis("Horizontal"), 0.0f);
             transform.position += horizontal * WalkSpeed * Time.deltaTime;
 		}
+
+        if (CrescentCanMove == true)
+        {
+          Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+          Crescent.gameObject.transform.position += movement * WalkSpeed * Time.deltaTime;
+        }
 
 		if (anim)
 		{
@@ -119,6 +157,33 @@ public class Character : MonoBehaviour
 		}
         //-- PLAYER ATTACKING IF STATEMENTS (BOTH KEYBOARD/CONTROLLER) --// 
 
+
+        //-- CRESCENT LIGHT TRANSFORM IF STATEMENTS (BOTH KEYBOARD/CONTROLLER) --// 
+        if (Input.GetKey(KeyCode.F) && CrescentCanLight == true || Input.GetButtonDown("CrescentTransform") && CrescentCanLight == true)
+        {
+            CrescentCanLight = false;
+            CrescentCanFollow = false;
+
+            CameraFollowPlayer = false;
+            CameraFollowCrescent = true; 
+
+            PlayerCanMove = false; 
+
+            Rigidbody2D LightSource = Instantiate(CrescentLight, Crescent.transform.position, Crescent.transform.rotation);
+            LightSource.gameObject.transform.parent = GameObject.Find("Crescent").transform;
+
+            ShakeDuration = 5.5f;
+            StartCoroutine(CrescentLightMove());
+            CameraShake();
+        }
+
+        else if (Input.GetKey(KeyCode.F) && CrescentCanLight == false || Input.GetButtonDown("CrescentTransform") && CrescentCanLight == false)
+        {
+            StartCoroutine(StopCrescentLight());
+        }
+        //-- CRESCENT LIGHT TRANSFORM IF STATEMENTS (BOTH KEYBOARD/CONTROLLER) --// 
+
+
         if (MainCamera)
         {
             CameraFollow();
@@ -133,9 +198,18 @@ public class Character : MonoBehaviour
 
         if (!CameraHolder)
         {
-            CameraHolder = GameObject.Find("Camera");
+          CameraHolder = GameObject.Find("Camera");
         }
 
+        if (!Crescent)
+        {
+          Crescent = GameObject.Find("Crescent");
+        }
+
+        else if (Crescent)
+        {
+          CrescentFollow();
+        }
 
         if (Input.GetAxis("Horizontal") < 0)
         {
@@ -199,6 +273,18 @@ public class Character : MonoBehaviour
 		transform.localScale = scaleFactor;
 	}
 
+
+    //-- CRESCENT FUNCTIONS --// 
+    void CrescentFollow()
+    {
+        if (CrescentCanFollow == true)
+        {
+          Crescent.transform.position = new Vector3(gameObject.transform.position.x - 2.0f, gameObject.transform.position.y + 3.0f + (Mathf.PingPong(Time.time, 1.0f) - Subtractor * NewPosition), Crescent.transform.position.z);
+        }
+    }
+    //-- CRESCENT FUNCTIONS --// 
+
+
     //-- CAMERA FUNCTIONS --// 
 
     void CameraScale()
@@ -225,6 +311,11 @@ public class Character : MonoBehaviour
         if (CameraFollowPlayer == true)
         {
             MainCamera.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, MainCamera.transform.position.z);
+        }
+
+        else if (CameraFollowCrescent == true)
+        {
+            MainCamera.transform.position = new Vector3(Crescent.transform.position.x, Crescent.transform.position.y, MainCamera.transform.position.z);
         }
     }
 
@@ -271,8 +362,32 @@ public class Character : MonoBehaviour
 
             yield return null; 
         }
+
+        ShakeDuration = 0.4f; 
     }
-        
+
+    IEnumerator CrescentLightMove()
+    {
+        yield return new WaitForSeconds(5.5f);
+        CrescentCanMove = true;
+    }
+
+    IEnumerator StopCrescentLight()
+    {
+        if (CrescentCanMove == true)
+        {
+            yield return new WaitForSeconds(0.15f);
+
+            CrescentCanLight = true;
+            CrescentCanFollow = true;
+
+            CameraFollowPlayer = true;
+            CameraFollowCrescent = false;
+
+            PlayerCanMove = true;
+        }
+    }
+
     //-- COROUTINES --// 
 
 }
