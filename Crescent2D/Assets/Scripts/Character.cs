@@ -194,7 +194,7 @@ public class Character : MonoBehaviour
             CameraShake();
         }
 
-        if (Input.GetKeyDown(KeyCode.R) && PowerUpCount == 3)
+        if (Input.GetKeyDown(KeyCode.R) && PowerUpCount >= 3)
         {
             Debug.Log(PowerUpCount);
             Rigidbody2D PowerupEffectSource = Instantiate(PowerupEffect, gameObject.transform.position, gameObject.transform.rotation);
