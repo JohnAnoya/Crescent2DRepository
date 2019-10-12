@@ -30,6 +30,7 @@ TagManager:
   - Key
   - Level
   - Parry
+  - Exit
   layers:
   - Default
   - TransparentFX

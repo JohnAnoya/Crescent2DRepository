@@ -194,7 +194,7 @@ public class Character : MonoBehaviour
             CameraShake();
         }
 
-        if (Input.GetKeyDown(KeyCode.R) && PowerUpCount >= 3)
+        if (Input.GetKeyDown(KeyCode.R) && PowerUpCount >= 3 || Input.GetButtonDown("Powerup") && PowerUpCount >= 3)
         {
             Debug.Log(PowerUpCount);
             Rigidbody2D PowerupEffectSource = Instantiate(PowerupEffect, gameObject.transform.position, gameObject.transform.rotation);
@@ -313,6 +313,27 @@ public class Character : MonoBehaviour
         {
             SceneManager.LoadScene("Map1");
         }
+
+       if (collision.gameObject.tag == "Exit")
+        {
+            collision.gameObject.GetComponent<SpriteRenderer>().color = new Color(255.0f, 0.0f, 0.0f);
+        }
+    }
+
+    void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Exit" && Input.GetButtonDown("Submit") && SceneManager.GetActiveScene().buildIndex < 6)
+        {
+            SceneManager.LoadScene("Map1");
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Exit")
+        {
+            collision.gameObject.GetComponent<SpriteRenderer>().color = new Color(255.0f, 255.0f, 255.0f);
+        }   
     }
 
     // flips the sprite when player walks left
