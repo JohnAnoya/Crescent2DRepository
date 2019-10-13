@@ -27,5 +27,10 @@ public class CharacterBoardMovement : MonoBehaviour
             Debug.Log("Player hit Enter");
             SceneManager.LoadScene(collision.gameObject.name);
         }
+
+       else if (collision.tag == "Tutorial" && Input.GetButtonDown("Submit"))
+        {
+           SceneManager.LoadScene("Tutorial");
+        }
     }
 }
