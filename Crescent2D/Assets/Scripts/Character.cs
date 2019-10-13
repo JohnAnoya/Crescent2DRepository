@@ -39,6 +39,9 @@ public class Character : MonoBehaviour
 
 	//-- PLAYER AUDIO --// 
 	public AudioClip playerJumpSnd;
+	public AudioClip playerDashSnd;
+
+	public AudioClip pickedUpItemSnd;
 
 	public AudioClip playerLightAttackSnd;
 	public AudioClip playerHurtSnd;
@@ -178,8 +181,12 @@ public class Character : MonoBehaviour
             DashEffectSource.transform.parent = gameObject.transform;
 
             rb.velocity = new Vector2(10.5f, 0.0f);
-            ShakeDuration = 0.4f;
-            ShakeMagnitude = 0.12f; 
+
+			AudioManager.instance.PlayAudioClip(playerDashSnd);
+
+			ShakeDuration = 0.4f;
+            ShakeMagnitude = 0.12f;
+
             CameraShake();
         }
 
@@ -189,9 +196,13 @@ public class Character : MonoBehaviour
             DashEffectSource.transform.parent = gameObject.transform;
 
             rb.velocity = new Vector2(-10.5f, 0.0f);
-            ShakeDuration = 0.4f;
-            ShakeMagnitude = 0.12f;
-            CameraShake();
+
+			AudioManager.instance.PlayAudioClip(playerDashSnd);
+
+			ShakeDuration = 0.4f;
+			ShakeMagnitude = 0.12f;
+
+			CameraShake();
         }
 
         if (Input.GetKeyDown(KeyCode.R) && PowerUpCount >= 3 || Input.GetButtonDown("Powerup") && PowerUpCount >= 3)
@@ -306,6 +317,7 @@ public class Character : MonoBehaviour
        if (collision.gameObject.tag == "Key")
         {
             HasKey = true;
+			AudioManager.instance.PlayAudioClip(pickedUpItemSnd);
             Destroy(collision.gameObject);
         }
 
