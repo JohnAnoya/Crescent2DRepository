@@ -31,6 +31,7 @@ TagManager:
   - Level
   - Parry
   - Exit
+  - Tutorial
   layers:
   - Default
   - TransparentFX
