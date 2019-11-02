@@ -49,18 +49,18 @@ public class CharacterBoardMovement : MonoBehaviour
             Title = GameObject.Find("UI/MapUIPopUp/Panel/Title").GetComponent<TextMeshProUGUI>();
             Level = GameObject.Find("UI/MapUIPopUp/Panel/Level").GetComponent<TextMeshProUGUI>();
 
-            Level.text = "Level: " + collision.gameObject.name;
+            Level.text = collision.gameObject.name;
             Title.text = collision.gameObject.transform.Find("Title").GetComponent<Text>().text;
         }
 
 
-        if (collision.tag == "Level" && Input.GetButtonDown("Submit"))
+        if (collision.tag == "Level" && Input.GetButtonDown("Submit") || collision.tag == "Level" && Input.GetKey(KeyCode.Return))
         {
             Debug.Log("Player hit Enter");
-            SceneManager.LoadScene("Level" + collision.gameObject.name);
+            SceneManager.LoadScene(collision.gameObject.name);
         }
 
-       else if (collision.tag == "Tutorial" && Input.GetButtonDown("Submit"))
+       else if (collision.tag == "Tutorial" && Input.GetButtonDown("Submit") || collision.tag == "Tutorial" && Input.GetKey(KeyCode.Return))
         {
            SceneManager.LoadScene("Tutorial");
         }

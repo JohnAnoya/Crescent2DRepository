@@ -205,7 +205,7 @@ GameObject:
   - component: {fileID: 486551510}
   - component: {fileID: 486551511}
   m_Layer: 0
-  m_Name: Tutorial
+  m_Name: Grandpas House
   m_TagString: Level
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -470,7 +470,7 @@ GameObject:
   - component: {fileID: 1107543826}
   - component: {fileID: 1107543827}
   m_Layer: 0
-  m_Name: 1
+  m_Name: Level 1
   m_TagString: Level
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -607,7 +607,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '"Grandpa''s House"
+  m_Text: '"Enter Grandpa''s House"
 
 '
 --- !u!222 &1474975188
@@ -688,7 +688,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: '"Callous City"
+
+'
 --- !u!222 &1516736651
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -774,7 +776,7 @@ GameObject:
   - component: {fileID: 1939832606}
   - component: {fileID: 1939832607}
   m_Layer: 0
-  m_Name: 2
+  m_Name: Level 2
   m_TagString: Level
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -881,7 +883,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: '"Crepuscule Cavern" '
 --- !u!222 &2002413981
 CanvasRenderer:
   m_ObjectHideFlags: 0
