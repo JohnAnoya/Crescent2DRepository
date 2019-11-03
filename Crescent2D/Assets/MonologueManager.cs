@@ -24,6 +24,14 @@ public class MonologueManager : MonoBehaviour
         MonologueSentences = new Queue<string>();
     }
 
+    void Update()
+    {
+       if (Input.GetButtonDown("NextSentence") && GameObject.Find("NPC").GetComponent<NPCMonologueTrigger>().MonologueIsOpen == true)
+        {
+            ShowNextSentence();
+        }
+    }
+
     public void BeginMonologue(Monologue monologue)
     {
         MonologueNameText.text = monologue.NPCName;

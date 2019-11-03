@@ -1823,8 +1823,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.7, y: -10.9}
-  m_SizeDelta: {x: 250, y: 75}
+  m_AnchoredPosition: {x: 1.7, y: 9.4}
+  m_SizeDelta: {x: 250, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1585106371
 MonoBehaviour:
@@ -1848,8 +1848,8 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: INFO GOES HERE
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c88bc41c4609e6a48bff5a1985d85e80, type: 2}
-  m_sharedMaterial: {fileID: -4023944871871201093, guid: c88bc41c4609e6a48bff5a1985d85e80,
+  m_fontAsset: {fileID: 11400000, guid: 09590aaf67bf6984ca2a0628c5947f4a, type: 2}
+  m_sharedMaterial: {fileID: 4487954713338853032, guid: 09590aaf67bf6984ca2a0628c5947f4a,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1875,12 +1875,12 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 9
+  m_fontSize: 8
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 6
-  m_fontSizeMax: 9
+  m_fontSizeMin: 3
+  m_fontSizeMax: 8
   m_fontStyle: 1
   m_textAlignment: 258
   m_characterSpacing: 0
@@ -1961,7 +1961,7 @@ GameObject:
   - component: {fileID: 1606725246}
   - component: {fileID: 1606725247}
   m_Layer: 0
-  m_Name: Grandpa
+  m_Name: NPC
   m_TagString: MonologueNPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2064,7 +2064,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.14448357, y: 0.09386253}
+  m_Offset: {x: -0.28429604, y: 0.17012358}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -2075,7 +2075,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.042614, y: 3.2605991}
+  m_Size: {x: 5.491596, y: 3.8707}
   m_EdgeRadius: 0
 --- !u!114 &1606725247
 MonoBehaviour:
@@ -2090,7 +2090,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monologue:
-    NPCName: Grandpa
+    NPCName: GRANDPA
     Sentences:
     - Well, if it isn't my grandson Lua! Who would this little guy be next to you?
     - 'Huh, Crescent you say? Crescent and Lua... you two sound like a great team! '
@@ -2099,8 +2099,8 @@ MonoBehaviour:
     - 'We need to defend the world from Python and his minions... even if it results
       in a skirmish. '
     - 'Before you head on out make sure you familarize yourself with combat. You can
-      use my Training Grounds I have conveniently built in my house to do so. Remember
-      to stay safe!  '
+      use my Training Grounds I have conveniently built in my house to do so. '
+    - Remember to stay safe!
   MainMonologuePanel: {fileID: 0}
   FindPlayer: {fileID: 0}
   MonologueIsOpen: 0
