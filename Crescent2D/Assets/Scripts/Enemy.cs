@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI; 
 
 /* LIST OF ENEMIES, ENEMY NAMES, AND LEVEL ASSOCIATION */
 /*   {                               }   */
@@ -15,6 +16,7 @@ abstract public class Enemy : MonoBehaviour
 
     public float speed;
     public float health;
+    public float initialHealth; 
     float distance;
     float height;
     float leftFollowRange;
@@ -27,6 +29,8 @@ abstract public class Enemy : MonoBehaviour
     bool EnemyJumpDebounce;
 
     public Vector3 initialPos;
+
+    public Image HealthBar; 
 
     public void StartEnemyScript()
     {
@@ -100,6 +104,12 @@ abstract public class Enemy : MonoBehaviour
         {
             anim.SetBool("Walk", false);
             gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, initialPos, 1.0f * speed * Time.deltaTime);
+        }
+
+
+        if (HealthBar)
+        {
+            HealthBar.fillAmount = health / initialHealth;
         }
     }
 

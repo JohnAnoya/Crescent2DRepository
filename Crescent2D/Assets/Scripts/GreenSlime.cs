@@ -12,6 +12,7 @@ public class GreenSlime : Enemy
     {
         speed = 5.0f;
         health = 100.0f;
+        initialHealth = 100.0f;
         initialPos.x = gameObject.transform.position.x;
         initialPos.y = gameObject.transform.position.y;
 
