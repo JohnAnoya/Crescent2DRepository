@@ -13,18 +13,18 @@ public class PlainPlayer : MonoBehaviour
     TextMeshProUGUI Level;
 
     public Transform UIPopUp;
-    public Transform camera; 
+    public Transform camera;
 
     float WalkSpeed;
 
     bool UIOpen;
     bool CameraFollowPlayer;
-    bool PlayerCanMove;
-    bool isFacingRight; 
+    public bool PlayerCanMove;
+    bool isFacingRight;
 
     void Awake()
     {
-        camera = Camera.main.transform;    
+        camera = Camera.main.transform;
     }
 
     // Start is called before the first frame update
@@ -34,13 +34,13 @@ public class PlainPlayer : MonoBehaviour
         anim = GetComponent<Animator>();
         CameraFollowPlayer = true;
         PlayerCanMove = true;
-        isFacingRight = true; 
+        isFacingRight = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        float moveDirection = Input.GetAxis("Horizontal");
+        float moveDirection = Input.GetAxis("Horizontal") + Input.GetAxis("Vertical");
 
         if (PlayerCanMove == true)
         {
@@ -100,11 +100,13 @@ public class PlainPlayer : MonoBehaviour
 
         if (collision.gameObject.tag == "Exit" && Input.GetButtonDown("Submit") && SceneManager.GetActiveScene().buildIndex < 6)
         {
+            Destroy(GameObject.Find("MapUIPopUp"));
             SceneManager.LoadScene("Map1");
         }
 
         else if (collision.tag == "Tutorial" && Input.GetButtonDown("Submit"))
         {
+            Destroy(GameObject.Find("MapUIPopUp"));
             SceneManager.LoadScene("Tutorial");
         }
     }

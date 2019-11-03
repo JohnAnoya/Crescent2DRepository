@@ -32,6 +32,7 @@ TagManager:
   - Parry
   - Exit
   - Tutorial
+  - MonologueNPC
   layers:
   - Default
   - TransparentFX
