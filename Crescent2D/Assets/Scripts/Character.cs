@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Character : MonoBehaviour
 {
@@ -16,9 +17,13 @@ public class Character : MonoBehaviour
     public LayerMask isGroundLayer;
     public Transform groundCheck;
 
+    public Image HealthBar; 
+
     private Vector2 movePlayerHorizontal;
     private Vector2 movePlayerVertical;
 
+    float initialHealth;
+    float PlayerHealth; 
     float WalkSpeed;
     float JumpHeight;
     float groundCheckRadius;
@@ -28,13 +33,15 @@ public class Character : MonoBehaviour
 
     public GameObject MainCamera;
     public GameObject CameraHolder;
-    public GameObject Crescent; 
+    public GameObject Crescent;
+    public GameObject DeathPanel; 
 
     public bool isGrounded;
     public bool isFacingRight;
     bool PlayerCanMove;
     bool HasKey;
-    bool isCrouching; 
+    bool isCrouching;
+    bool isDead; 
 	//-- PLAYER VARIABLES --// 
 
 	//-- PLAYER AUDIO --// 
@@ -66,20 +73,28 @@ public class Character : MonoBehaviour
     float camStart;
     float camShakeSpeed;
     float ShakeDuration;
-    float ShakeMagnitude; 
+    float ShakeMagnitude;
     //-- CAMERA VARIABLES --// 
-    
+
+    void Awake()
+    {
+        DeathPanel = GameObject.Find("UI/Canvas/DeathPanelBorder"); 
+    }
+
 
     // Start is called before the first frame update
     void Start()
     {
-        //-- SETTING PLAYER VARIABLES --//
+        Time.timeScale = 1.0f; 
 
+        //-- SETTING PLAYER VARIABLES --//
         rb = GetComponent<Rigidbody2D>();
 		anim = GetComponent<Animator>();
 
-        PowerUpCount = 0; 
+        PowerUpCount = 0;
 
+        PlayerHealth = 150.0f;
+        initialHealth = 150.0f; 
         WalkSpeed = 10.0f;
         JumpHeight = 13.0f;
         groundCheckRadius = 0.1f;
@@ -89,6 +104,7 @@ public class Character : MonoBehaviour
 
         HasKey = false;
         isCrouching = false;
+        isDead = false; 
         //-- SETTING PLAYER VARIABLES --//
 
         //-- SETTING CRESCENT VARIABLES --// 
@@ -141,7 +157,7 @@ public class Character : MonoBehaviour
           Crescent.gameObject.transform.position += movement * WalkSpeed * Time.deltaTime;
         }
 
-		if (anim)
+		if (anim && isDead == false)
 		{
 			anim.SetFloat("Speed", Mathf.Abs(moveDirection));
 
@@ -153,17 +169,55 @@ public class Character : MonoBehaviour
 			flip();
 		}
 
-		if (Input.GetButtonDown("Jump") && isGrounded == true)
+		if (Input.GetButtonDown("Jump") && isGrounded == true && isDead == false)
         {
             Debug.Log("Is Jumping lol");
             anim.Play("PlayerJump");
             rb.AddForce(new Vector2(0.0f, JumpHeight), ForceMode2D.Impulse);
 			AudioManager.instance.alterPitchEffect(playerJumpSnd, playerJumpSnd);
-
 		}
 
+        //-- PLAYER HEALTH IF STATEMENTS --// 
+
+        if (HealthBar)
+        {
+            float calculateHealthBarAmount = PlayerHealth / initialHealth;
+            HealthBar.fillAmount = calculateHealthBarAmount;
+
+            if (PlayerHealth > 75.0f)
+            {
+                HealthBar.color = Color.green; 
+            }
+
+            else if (PlayerHealth < 75.0f)
+            {
+                HealthBar.color = Color.yellow;
+            }
+
+            if (PlayerHealth < 0.0f)
+            {
+                isDead = true;
+                DeathPanel.SetActive(true);
+                PlayerCanMove = false;
+                Time.timeScale = 0.0f; 
+            }
+
+            if (isDead && Input.GetButtonDown("Respawn"))
+            {
+                RespawnPlayer();
+            }
+
+            else if (isDead && Input.GetButtonDown("GoBackToMap"))
+            {
+                GoBackToMap();
+            }
+        }
+        //-- PLAYER HEALTH IF STATEMENTS --// 
+
+
+
         //-- PLAYER ATTACKING IF STATEMENTS (BOTH KEYBOARD/CONTROLLER) --// 
-        if (Input.GetButtonDown("Fire1") || Input.GetKey(KeyCode.Joystick1Button10))
+        if (Input.GetButtonDown("Fire1") && isDead == false || Input.GetKey(KeyCode.Joystick1Button10) && isDead == false)
         {
             gameObject.transform.GetChild(1).GetComponent<BoxCollider2D>().enabled = true;
             anim.SetBool("QuickAttack", true);
@@ -175,7 +229,7 @@ public class Character : MonoBehaviour
 
 
         //-- PLAYER MOVEMENT MECHANICS STATEMENTS (BOTH KEYBOARD/CONTROLLER) --// 
-        if (Input.GetKeyDown(KeyCode.F) && isFacingRight && isCrouching == false && isGrounded == false || Input.GetButtonDown("Dash") && isFacingRight && isCrouching == false && isGrounded == false)
+        if (Input.GetKeyDown(KeyCode.F) && isFacingRight && isCrouching == false && isGrounded == false && isDead == false || Input.GetButtonDown("Dash") && isFacingRight && isCrouching == false && isGrounded == false && isDead == false)
         {
             Rigidbody2D DashEffectSource = Instantiate(DashEffect, gameObject.transform.position, gameObject.transform.rotation);
             DashEffectSource.transform.parent = gameObject.transform;
@@ -190,7 +244,7 @@ public class Character : MonoBehaviour
             CameraShake();
         }
 
-        else if (Input.GetKeyDown(KeyCode.F) && !isFacingRight && isCrouching == false && isGrounded == false || Input.GetButtonDown("Dash") && !isFacingRight && isCrouching == false && isGrounded == false)
+        else if (Input.GetKeyDown(KeyCode.F) && !isFacingRight && isCrouching == false && isGrounded == false && isDead == false || Input.GetButtonDown("Dash") && !isFacingRight && isCrouching == false && isGrounded == false && isDead == false)
         {
             Rigidbody2D DashEffectSource = Instantiate(DashEffect, gameObject.transform.position, gameObject.transform.rotation);
             DashEffectSource.transform.parent = gameObject.transform;
@@ -205,7 +259,7 @@ public class Character : MonoBehaviour
 			CameraShake();
         }
 
-        if (Input.GetKeyDown(KeyCode.R) && PowerUpCount >= 3 || Input.GetButtonDown("Powerup") && PowerUpCount >= 3)
+        if (Input.GetKeyDown(KeyCode.R) && PowerUpCount >= 3 && isDead == false || Input.GetButtonDown("Powerup") && PowerUpCount >= 3 && isDead == false)
         {
             Debug.Log(PowerUpCount);
             Rigidbody2D PowerupEffectSource = Instantiate(PowerupEffect, gameObject.transform.position, gameObject.transform.rotation);
@@ -221,7 +275,7 @@ public class Character : MonoBehaviour
 
 
         //-- CRESCENT LIGHT TRANSFORM IF STATEMENTS (BOTH KEYBOARD/CONTROLLER) --// 
-        if (Input.GetKey(KeyCode.V) && CrescentCanLight == true || Input.GetButtonDown("CrescentTransform") && CrescentCanLight == true)
+        if (Input.GetKey(KeyCode.V) && CrescentCanLight == true && isDead == false || Input.GetButtonDown("CrescentTransform") && CrescentCanLight == true && isDead == false)
         {
             CrescentCanLight = false;
             CrescentCanFollow = false;
@@ -239,7 +293,7 @@ public class Character : MonoBehaviour
             CameraShake();
         }
 
-        else if (Input.GetKey(KeyCode.V) && CrescentCanLight == false || Input.GetButtonDown("CrescentTransform") && CrescentCanLight == false)
+        else if (Input.GetKey(KeyCode.V) && CrescentCanLight == false && isDead == false || Input.GetButtonDown("CrescentTransform") && CrescentCanLight == false && isDead == false)
         {
             StartCoroutine(StopCrescentLight());
         }
@@ -282,7 +336,6 @@ public class Character : MonoBehaviour
         {
             isFacingRight = true;  
         }
-
     }
 
 
@@ -308,6 +361,18 @@ public class Character : MonoBehaviour
             StartCoroutine(Fling());
 
 			AudioManager.instance.alterPitchEffect(playerHurtSnd, playerHurtSnd);
+        }
+
+        if (collision.gameObject.tag == "Enemy1")
+        {
+            float TakeDamage = Random.Range(5, 15);
+            PlayerHealth = PlayerHealth - TakeDamage; 
+        }
+
+        else if (collision.gameObject.tag == "Enemy2")
+        {
+            float TakeDamage = Random.Range(15, 25);
+            PlayerHealth = PlayerHealth - TakeDamage;
         }
     }
 
@@ -409,6 +474,23 @@ public class Character : MonoBehaviour
         StartCoroutine(CameraShaking());
     }
     //-- CAMERA FUNCTIONS --// 
+
+
+    //-- PLAYER RESPAWN FUCNTION --// 
+    public void RespawnPlayer()
+    {
+        Time.timeScale = 1.0f; 
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    //-- PLAYER RESPAWN FUNCTION --// 
+
+    //-- GO BACK TO MAP FUNCTION --// 
+    public void GoBackToMap()
+    {
+        Time.timeScale = 1.0f;
+        SceneManager.LoadScene("Map1");
+    }
+    //-- GO BACK TO MAP FUNCTION --// 
 
 
     //-- COROUTINES --// 

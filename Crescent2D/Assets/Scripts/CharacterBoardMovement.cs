@@ -25,6 +25,7 @@ public class CharacterBoardMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Time.timeScale = 1.0f;
         WalkSpeed = 12.0f;
         UIOpen = false; 
     }

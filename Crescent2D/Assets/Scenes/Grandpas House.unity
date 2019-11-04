@@ -642,7 +642,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: CLICK NEXT OR PRESS X TO SKIP
+  m_text: CLICK NEXT OR PRESS CIRCLE TO SKIP
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c88bc41c4609e6a48bff5a1985d85e80, type: 2}
   m_sharedMaterial: {fileID: -4023944871871201093, guid: c88bc41c4609e6a48bff5a1985d85e80,
