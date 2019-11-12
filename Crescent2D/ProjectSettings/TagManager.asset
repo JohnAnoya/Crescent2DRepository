@@ -33,6 +33,9 @@ TagManager:
   - Exit
   - Tutorial
   - MonologueNPC
+  - RedButton
+  - GreenButton
+  - BlueButton
   layers:
   - Default
   - TransparentFX
