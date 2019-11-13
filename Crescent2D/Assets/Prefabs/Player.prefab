@@ -73,7 +73,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1442139943
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 4723107735738678597, guid: 1cbf937d1b98f9448a38992ec2f6c218,
     type: 3}
@@ -144,10 +144,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   groundCheck: {fileID: 2538870201844054205}
+  HealthBar: {fileID: 0}
   PowerUpCount: 0
   MainCamera: {fileID: 0}
   CameraHolder: {fileID: 0}
   Crescent: {fileID: 0}
+  DeathPanel: {fileID: 0}
   isGrounded: 0
   isFacingRight: 0
   playerJumpSnd: {fileID: 8300000, guid: b5e59247c42ffc047a038472af15400a, type: 3}
@@ -156,6 +158,7 @@ MonoBehaviour:
   playerLightAttackSnd: {fileID: 8300000, guid: 3d88d12fef544b24db2e32fe9d26c241,
     type: 3}
   playerHurtSnd: {fileID: 8300000, guid: e54a9990c82a60d4286dfd3ab110be90, type: 3}
+  playerDeathSnd: {fileID: 8300000, guid: b2e7a13aae6a02e439419b64ea8620a7, type: 3}
   CrescentLight: {fileID: 4409772853029439797, guid: 3897c9ff3c5eb6c4a92049e603335265,
     type: 3}
 --- !u!95 &2538870201308132820
