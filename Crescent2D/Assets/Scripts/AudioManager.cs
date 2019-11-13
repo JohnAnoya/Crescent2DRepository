@@ -8,7 +8,14 @@ public class AudioManager : MonoBehaviour
 	public AudioSource soundEffectSource;
 	public AudioSource musicSource;
 
+	public AudioSource deathMusicSource;
+
+	public bool levelMusic = true;
+	public bool deathMusic = false;
+
 	public static AudioManager instance = null;
+
+	public Character character;
 
 	// will be used to alter the pitch of audio effects for variation of sound.
 	public float lowPitch = 0.95f;
@@ -25,13 +32,14 @@ public class AudioManager : MonoBehaviour
 		{
 			Destroy(gameObject);
 		}
-		//DontDestroyOnLoad(gameObject);
 	}
 
 
 	// when called will play a single audio clip
 	public void PlayAudioClip(AudioClip audio)
 	{
+		levelMusic = true;
+		deathMusic = false;
 		soundEffectSource.clip = audio;
 		musicSource.PlayOneShot(audio);
 	}
@@ -46,6 +54,20 @@ public class AudioManager : MonoBehaviour
 		soundEffectSource.pitch = randomPitch;
 		soundEffectSource.clip = audioClips[randomNum];
 		soundEffectSource.Play();
+	}
+
+	public void DeathMusicPlay()
+	{
+		if (musicSource.isPlaying)
+		{
+			levelMusic = false;
+			musicSource.Stop();
+		}
+		if (!deathMusicSource.isPlaying && deathMusic == false)
+		{
+			deathMusicSource.Play();
+			deathMusic = true;
+		}
 	}
 
 }

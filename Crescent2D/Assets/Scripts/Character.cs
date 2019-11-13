@@ -23,7 +23,7 @@ public class Character : MonoBehaviour
     private Vector2 movePlayerVertical;
 
     float initialHealth;
-    float PlayerHealth; 
+    public float PlayerHealth; 
     float WalkSpeed;
     float JumpHeight;
     float groundCheckRadius;
@@ -41,7 +41,7 @@ public class Character : MonoBehaviour
     bool PlayerCanMove;
     bool HasKey;
     bool isCrouching;
-    bool isDead; 
+    public bool isDead; 
 	//-- PLAYER VARIABLES --// 
 
 	//-- PLAYER AUDIO --// 
@@ -52,6 +52,9 @@ public class Character : MonoBehaviour
 
 	public AudioClip playerLightAttackSnd;
 	public AudioClip playerHurtSnd;
+
+	private bool audioPlayed;
+
     //-- PLAYER AUDIO --//
 
     //-- CRESCENT VARIABLES --// 
@@ -134,8 +137,11 @@ public class Character : MonoBehaviour
         camShakeSpeed = 3.0f; 
         camStart = Camera.main.orthographicSize;
         ShakeDuration = 0.4f;
-        ShakeMagnitude = 0.6f; 
-        //-- SETTING CAMERA VARIABLES --// 
+        ShakeMagnitude = 0.6f;
+		//-- SETTING CAMERA VARIABLES --// 
+
+		// reseting variable
+		audioPlayed = false;
     }
 
     // Update is called once per frame
@@ -194,10 +200,13 @@ public class Character : MonoBehaviour
                 HealthBar.color = Color.yellow;
             }
 
-            if (PlayerHealth < 0.0f)
+            if (PlayerHealth <= 0.0f)
             {
                 isDead = true;
-                DeathPanel.SetActive(true);
+				if (isDead)
+				FindObjectOfType<AudioManager>().DeathMusicPlay();
+				
+				DeathPanel.SetActive(true);
                 PlayerCanMove = false;
                 Time.timeScale = 0.0f; 
             }
@@ -495,8 +504,7 @@ public class Character : MonoBehaviour
         Time.timeScale = 1.0f;
         SceneManager.LoadScene("Map1");
     }
-    //-- GO BACK TO MAP FUNCTION --// 
-
+	//-- GO BACK TO MAP FUNCTION --// 
 
     //-- COROUTINES --// 
     IEnumerator Fling()
