@@ -42,7 +42,7 @@ public class ButtonPress : MonoBehaviour
         anim = GetComponent<Animator>();
         defaultPuzzleColor = new Color(0.0f, 0.0f, 0.0f);
 
-        GuessArray = GameObject.Find("Door").GetComponent<DoorColorPuzzle>().PuzzleGuess;
+        GuessArray = GameObject.Find("Gate").GetComponent<DoorColorPuzzle>().PuzzleGuess;
 
         stillOnButton = false; 
 
@@ -80,7 +80,7 @@ public class ButtonPress : MonoBehaviour
         {
             float heightCheck = collision.gameObject.transform.position.y - gameObject.transform.position.y;
 
-            if (heightCheck > 1.15f)
+            if (heightCheck > 1.0f)
             {
                 stillOnButton = true; 
                 anim.SetBool("ButtonPress", true);

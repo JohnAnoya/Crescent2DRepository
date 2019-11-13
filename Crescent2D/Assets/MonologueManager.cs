@@ -51,7 +51,7 @@ public class MonologueManager : MonoBehaviour
         if (MonologueSentences.Count == 0)
         {
             Debug.Log("No monologue to display!");
-            StartCoroutine(GameObject.Find("NPC").GetComponent<NPCMonologueTrigger>().CloseMonologuePanel());
+            StartCoroutine(GameObject.Find("Grandpa").GetComponent<NPCMonologueTrigger>().CloseMonologuePanel());
             return;
         }
 

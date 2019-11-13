@@ -36,6 +36,7 @@ TagManager:
   - RedButton
   - GreenButton
   - BlueButton
+  - LevelExit
   layers:
   - Default
   - TransparentFX

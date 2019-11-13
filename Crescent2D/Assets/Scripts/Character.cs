@@ -374,6 +374,11 @@ public class Character : MonoBehaviour
             float TakeDamage = Random.Range(15, 25);
             PlayerHealth = PlayerHealth - TakeDamage;
         }
+
+        else if (collision.gameObject.tag == "LevelExit" && SceneManager.GetActiveScene().buildIndex < 6)
+        {
+            SceneManager.LoadScene("Map1");
+        }
     }
 
 
