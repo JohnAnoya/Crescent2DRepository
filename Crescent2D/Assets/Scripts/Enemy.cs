@@ -161,6 +161,11 @@ abstract public class Enemy : MonoBehaviour
             EnemyAttacking = true; 
             StartCoroutine(GroundAttack());
         }
+        
+        else if (collision.gameObject.tag == "Spikes")
+        {
+            health = 0.0f; 
+        }
     }
 
     void FlyingAttack()
