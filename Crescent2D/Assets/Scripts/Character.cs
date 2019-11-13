@@ -408,8 +408,12 @@ public class Character : MonoBehaviour
             if (PlayerHealth < initialHealth)
             {
                 PlayerHealth += 5.0f; 
-            }
-            
+            }           
+        }
+
+        else if (collision.gameObject.tag == "Spikes")
+        {
+            PlayerHealth = 0.0f; 
         }
     }
 

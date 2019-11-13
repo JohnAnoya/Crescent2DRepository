@@ -39,6 +39,7 @@ TagManager:
   - LevelExit
   - Crescent
   - HealthCollectible
+  - Spikes
   layers:
   - Default
   - TransparentFX
