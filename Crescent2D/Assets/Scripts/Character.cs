@@ -375,6 +375,19 @@ public class Character : MonoBehaviour
             PlayerHealth = PlayerHealth - TakeDamage;
         }
 
+        else if (collision.gameObject.tag == "Enemy3")
+        {
+            float TakeDamage = Random.Range(15, 30);
+            PlayerHealth = PlayerHealth - TakeDamage;
+        }
+
+        else if (collision.gameObject.tag == "Enemy4")
+        {
+            float TakeDamage = Random.Range(20, 35);
+            PlayerHealth = PlayerHealth - TakeDamage;
+        }
+
+
         else if (collision.gameObject.tag == "LevelExit" && SceneManager.GetActiveScene().buildIndex < 6)
         {
             SceneManager.LoadScene("Map1");

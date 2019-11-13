@@ -10,6 +10,7 @@ public class Spider : Enemy
     {
         speed = 6.0f;
         health = 125.0f;
+        initialHealth = 125.0f;
         initialPos.x = gameObject.transform.position.x;
         initialPos.y = gameObject.transform.position.y;
 

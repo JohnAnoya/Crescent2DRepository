@@ -80,7 +80,7 @@ public class ButtonPress : MonoBehaviour
         {
             float heightCheck = collision.gameObject.transform.position.y - gameObject.transform.position.y;
 
-            if (heightCheck > 1.0f)
+            if (heightCheck > 1.25f)
             {
                 stillOnButton = true; 
                 anim.SetBool("ButtonPress", true);

@@ -28,12 +28,23 @@ public class DoorColorPuzzle : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+       PuzzleColorsAnswer = new string[3];
+       RandomizeColors(); 
+
+       PuzzleGuess = new string[3];
+
+        PuzzleGuess[0] = null;
+        PuzzleGuess[1] = null;
+        PuzzleGuess[2] = null;
+    }
+
+    void RandomizeColors()
+    {
         List<string> ColorsInList = new List<string>();
+
         ColorsInList.Add("Color.red");
         ColorsInList.Add("Color.green");
         ColorsInList.Add("Color.blue");
-
-        PuzzleColorsAnswer = new string[3];
 
         for (int i = 0; i < PuzzleColorsAnswer.Length; i++)
         {
@@ -43,12 +54,6 @@ public class DoorColorPuzzle : MonoBehaviour
 
             Debug.Log(PuzzleColorsAnswer[i]);
         }
-
-        PuzzleGuess = new string[3];
-
-        PuzzleGuess[0] = null;
-        PuzzleGuess[1] = null;
-        PuzzleGuess[2] = null;
     }
 
     // Update is called once per frame
