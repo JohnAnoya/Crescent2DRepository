@@ -8,7 +8,7 @@ public class BlackCat : Enemy
     // Start is called before the first frame update
     void Start()
     {
-        speed = 10.5f;
+        speed = 11.0f;
         health = 95.0f;
         initialHealth = 95.0f;
         initialPos.x = gameObject.transform.position.x;

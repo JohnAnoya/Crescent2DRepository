@@ -12,7 +12,9 @@ abstract public class Enemy : MonoBehaviour
     public GameObject Player;
 
     Rigidbody2D rb;
-    Animator anim; 
+    Animator anim;
+
+    public Transform HealthCollectible; 
 
     public float speed;
     public float health;
@@ -110,6 +112,33 @@ abstract public class Enemy : MonoBehaviour
         if (HealthBar)
         {
             HealthBar.fillAmount = health / initialHealth;
+        }
+
+        if (gameObject.tag == "Enemy1" && health <= 0.0f || gameObject.tag == "Enemy2" && health <= 0.0f)
+        {
+           int HealthDropChance = Random.Range(0, 5);
+           
+           if (HealthDropChance > 0)
+            {
+                for (int i = 1; i <= HealthDropChance; i++)
+                {
+                   
+                    Instantiate(HealthCollectible, gameObject.transform.position, gameObject.transform.rotation);
+                }
+            }
+        }
+
+        else if (gameObject.tag == "Enemy3" && health <= 0.0f || gameObject.tag == "Enemy4" && health <= 0.0f)
+        {
+            int HealthDropChance = Random.Range(0, 10);
+
+            if (HealthDropChance > 0)
+            {
+                for (int i = 1; i <= HealthDropChance; i++)
+                {
+                    Instantiate(HealthCollectible, gameObject.transform.position, gameObject.transform.rotation);
+                }
+            }
         }
     }
 

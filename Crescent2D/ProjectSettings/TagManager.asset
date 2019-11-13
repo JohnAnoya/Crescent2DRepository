@@ -38,6 +38,7 @@ TagManager:
   - BlueButton
   - LevelExit
   - Crescent
+  - HealthCollectible
   layers:
   - Default
   - TransparentFX

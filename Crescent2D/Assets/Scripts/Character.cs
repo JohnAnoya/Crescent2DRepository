@@ -396,10 +396,20 @@ public class Character : MonoBehaviour
             PlayerHealth = PlayerHealth - TakeDamage;
         }
 
-
         else if (collision.gameObject.tag == "LevelExit" && SceneManager.GetActiveScene().buildIndex < 6)
         {
             SceneManager.LoadScene("Map1");
+        }
+
+        else if (collision.gameObject.tag == "HealthCollectible")
+        {
+            Destroy(collision.gameObject);
+            
+            if (PlayerHealth < initialHealth)
+            {
+                PlayerHealth += 5.0f; 
+            }
+            
         }
     }
 
