@@ -53,6 +53,8 @@ public class Character : MonoBehaviour
 	public AudioClip playerLightAttackSnd;
 	public AudioClip playerHurtSnd;
 
+	public AudioClip playerLootSnd;
+
 	private bool audioPlayed;
 
     //-- PLAYER AUDIO --//
@@ -404,7 +406,9 @@ public class Character : MonoBehaviour
         else if (collision.gameObject.tag == "HealthCollectible")
         {
             Destroy(collision.gameObject);
-            
+
+			AudioManager.instance.alterPitchEffect(playerLootSnd, playerLootSnd);
+
             if (PlayerHealth < initialHealth)
             {
                 PlayerHealth += 5.0f; 

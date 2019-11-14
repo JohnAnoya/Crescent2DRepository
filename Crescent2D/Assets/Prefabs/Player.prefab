@@ -145,6 +145,7 @@ MonoBehaviour:
     m_Bits: 512
   groundCheck: {fileID: 2538870201844054205}
   HealthBar: {fileID: 0}
+  PlayerHealth: 0
   PowerUpCount: 0
   MainCamera: {fileID: 0}
   CameraHolder: {fileID: 0}
@@ -152,13 +153,14 @@ MonoBehaviour:
   DeathPanel: {fileID: 0}
   isGrounded: 0
   isFacingRight: 0
+  isDead: 0
   playerJumpSnd: {fileID: 8300000, guid: b5e59247c42ffc047a038472af15400a, type: 3}
   playerDashSnd: {fileID: 8300000, guid: c4d936c54a1f4414d9ce7c798a0e7a23, type: 3}
   pickedUpItemSnd: {fileID: 8300000, guid: eaab6d64b3a93094fa36b78cafba8589, type: 3}
   playerLightAttackSnd: {fileID: 8300000, guid: 3d88d12fef544b24db2e32fe9d26c241,
     type: 3}
   playerHurtSnd: {fileID: 8300000, guid: e54a9990c82a60d4286dfd3ab110be90, type: 3}
-  playerDeathSnd: {fileID: 8300000, guid: b2e7a13aae6a02e439419b64ea8620a7, type: 3}
+  playerLootSnd: {fileID: 8300000, guid: 1102e4a9c925a6b4f8be93b3275ca479, type: 3}
   CrescentLight: {fileID: 4409772853029439797, guid: 3897c9ff3c5eb6c4a92049e603335265,
     type: 3}
 --- !u!95 &2538870201308132820
