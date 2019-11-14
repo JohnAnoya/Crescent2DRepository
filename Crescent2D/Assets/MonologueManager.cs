@@ -26,12 +26,13 @@ public class MonologueManager : MonoBehaviour
 
     void Update()
     {
-       if (Input.GetButtonDown("NextSentence") && GameObject.Find("Grandpa").GetComponent<NPCMonologueTrigger>().MonologueIsOpen == true)
+       if (Input.GetButtonDown("NextSentence") && GameObject.Find("Grandpa") && GameObject.Find("Grandpa").GetComponent<NPCMonologueTrigger>().MonologueIsOpen == true)
         {
+            Debug.Log("Next Sentence pls");
             ShowNextSentence();
         }
 
-       else if (Input.GetButtonDown("NextSentence") && GameObject.Find("Grandpa").GetComponent<NPCMonologueTrigger>().MonologueIsOpen == true)
+       else if (Input.GetButtonDown("NextSentence") && GameObject.Find("NOTE") && GameObject.Find("NOTE").GetComponent<NPCMonologueTrigger>().MonologueIsOpen == true)
         {
             ShowNextSentence();
         }
@@ -60,13 +61,13 @@ public class MonologueManager : MonoBehaviour
             if (GameObject.Find("Grandpa"))
             {
                 StartCoroutine(GameObject.Find("Grandpa").GetComponent<NPCMonologueTrigger>().CloseMonologuePanel());
+                return;
             }
             
             else if (GameObject.Find("NOTE")) {
                 StartCoroutine(GameObject.Find("NOTE").GetComponent<NPCMonologueTrigger>().CloseMonologuePanel());
+                return;
             }
-
-            return;
         }
 
         string Sentence = MonologueSentences.Dequeue();

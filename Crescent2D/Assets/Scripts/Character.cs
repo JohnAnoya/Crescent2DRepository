@@ -45,6 +45,7 @@ public class Character : MonoBehaviour
     public bool isGrounded;
     public bool isFacingRight;
     bool PlayerCanMove;
+    bool playerCanInteract;
     bool HasKey;
     bool isCrouching;
     bool UIOpen;
@@ -191,6 +192,12 @@ public class Character : MonoBehaviour
             rb.AddForce(new Vector2(0.0f, JumpHeight), ForceMode2D.Impulse);
 			AudioManager.instance.alterPitchEffect(playerJumpSnd, playerJumpSnd);
 		}
+
+        if (Input.GetButtonDown("Submit") && playerCanInteract == true && SceneManager.GetActiveScene().buildIndex < 6)
+        {
+            Debug.Log("Map1 should be loading....");
+            SceneManager.LoadScene("Map1");
+        }
 
         //-- PLAYER HEALTH IF STATEMENTS --// 
 
@@ -451,9 +458,9 @@ public class Character : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Exit" && Input.GetButtonDown("Submit") && SceneManager.GetActiveScene().buildIndex < 6)
+        if (collision.gameObject.tag == "Exit")
         {
-            SceneManager.LoadScene("Map1");
+            playerCanInteract = true; 
         }
 
         else if (collision.gameObject.tag == "Note" && UIOpen == false && GameObject.Find("NOTE") && GameObject.Find("NOTE").GetComponent<NPCMonologueTrigger>().MonologueIsOpen == false)
@@ -472,7 +479,7 @@ public class Character : MonoBehaviour
         }
     }
 
-    void OnTriggerExit2D(Collider2D collision)
+    void OnTriggerExit2D(Collider2D collision) 
     {
       if(GameObject.Find("NOTE") && GameObject.Find("NOTE").GetComponent<NPCMonologueTrigger>().MonologueIsOpen == false)
         Destroy(GameObject.Find("MapUIPopUp"));
@@ -481,6 +488,7 @@ public class Character : MonoBehaviour
         if (collision.gameObject.tag == "Exit")
         {
             collision.gameObject.GetComponent<SpriteRenderer>().color = new Color(255.0f, 255.0f, 255.0f);
+            playerCanInteract = false;
         }   
     }
 

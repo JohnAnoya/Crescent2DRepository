@@ -20,6 +20,8 @@ public class PlainPlayer : MonoBehaviour
     bool UIOpen;
     bool CameraFollowPlayer;
     public bool PlayerCanMove;
+    bool playerCanInteract;
+    bool playerCanEnterTutorial; 
     bool isFacingRight;
 
     void Awake()
@@ -58,6 +60,18 @@ public class PlainPlayer : MonoBehaviour
         {
             isFacingRight = !isFacingRight;
             gameObject.GetComponent<SpriteRenderer>().flipX = !gameObject.GetComponent<SpriteRenderer>().flipX;
+        }
+
+        if(Input.GetButtonDown("Submit") && playerCanInteract == true && SceneManager.GetActiveScene().buildIndex < 6) 
+        {
+            Destroy(GameObject.Find("MapUIPopUp"));
+            SceneManager.LoadScene("Map1");
+        }
+
+        if (Input.GetButtonDown("Submit") && playerCanEnterTutorial == true)
+        {
+            Destroy(GameObject.Find("MapUIPopUp"));
+            SceneManager.LoadScene("Tutorial");
         }
 
             CameraFollow();
@@ -99,16 +113,14 @@ public class PlainPlayer : MonoBehaviour
         }
 
 
-        if (collision.gameObject.tag == "Exit" && Input.GetButtonDown("Submit") && SceneManager.GetActiveScene().buildIndex < 6)
+        if (collision.gameObject.tag == "Exit")
         {
-            Destroy(GameObject.Find("MapUIPopUp"));
-            SceneManager.LoadScene("Map1");
+            playerCanInteract = true;
         }
 
-        else if (collision.tag == "Tutorial" && Input.GetButtonDown("Submit"))
+        else if (collision.tag == "Tutorial")
         {
-            Destroy(GameObject.Find("MapUIPopUp"));
-            SceneManager.LoadScene("Tutorial");
+            playerCanEnterTutorial = true; 
         }
     }
 
@@ -116,9 +128,11 @@ public class PlainPlayer : MonoBehaviour
     {
         Destroy(GameObject.Find("MapUIPopUp"));
         UIOpen = false;
+        playerCanEnterTutorial = false;
 
         if (collision.gameObject.tag == "Exit")
         {
+            playerCanInteract = false; 
             collision.gameObject.GetComponent<SpriteRenderer>().color = new Color(255.0f, 255.0f, 255.0f);
         }
     }
