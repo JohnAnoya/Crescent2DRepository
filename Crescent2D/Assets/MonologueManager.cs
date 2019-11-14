@@ -26,7 +26,12 @@ public class MonologueManager : MonoBehaviour
 
     void Update()
     {
-       if (Input.GetButtonDown("NextSentence") && GameObject.Find("NPC").GetComponent<NPCMonologueTrigger>().MonologueIsOpen == true)
+       if (Input.GetButtonDown("NextSentence") && GameObject.Find("Grandpa").GetComponent<NPCMonologueTrigger>().MonologueIsOpen == true)
+        {
+            ShowNextSentence();
+        }
+
+       else if (Input.GetButtonDown("NextSentence") && GameObject.Find("Grandpa").GetComponent<NPCMonologueTrigger>().MonologueIsOpen == true)
         {
             ShowNextSentence();
         }
@@ -51,7 +56,16 @@ public class MonologueManager : MonoBehaviour
         if (MonologueSentences.Count == 0)
         {
             Debug.Log("No monologue to display!");
-            StartCoroutine(GameObject.Find("Grandpa").GetComponent<NPCMonologueTrigger>().CloseMonologuePanel());
+
+            if (GameObject.Find("Grandpa"))
+            {
+                StartCoroutine(GameObject.Find("Grandpa").GetComponent<NPCMonologueTrigger>().CloseMonologuePanel());
+            }
+            
+            else if (GameObject.Find("NOTE")) {
+                StartCoroutine(GameObject.Find("NOTE").GetComponent<NPCMonologueTrigger>().CloseMonologuePanel());
+            }
+
             return;
         }
 

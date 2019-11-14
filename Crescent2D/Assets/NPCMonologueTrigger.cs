@@ -71,7 +71,7 @@ public class NPCMonologueTrigger : MonoBehaviour
 
         while (elapsedTime < MaxLerpTimer)
         {
-            MainMonologuePanel.transform.position = new Vector3(MainMonologuePanel.transform.position.x, Mathf.Lerp(MainMonologuePanel.transform.position.y, OpenedMonologuePos, (elapsedTime / MaxLerpTimer)), 0.0f);
+            MainMonologuePanel.transform.position = new Vector3(MainMonologuePanel.transform.position.x, Mathf.Lerp(MainMonologuePanel.transform.position.y, OpenedMonologuePos, (elapsedTime / 0.5f)), 0.0f);
             elapsedTime += Time.deltaTime;
 
             yield return null;

@@ -12,16 +12,36 @@ public class DoorColorPuzzle : MonoBehaviour
     TextMeshProUGUI InfoText;
 
     GameObject Door;
+    GameObject[] CircleClue;
+    
+
     Animator DoorAnim; 
 
     void Awake()
     {
-        InfoText = GameObject.Find("UI/Canvas/Info").GetComponent<TextMeshProUGUI>();  
+        InfoText = GameObject.Find("UI/Canvas/Info").GetComponent<TextMeshProUGUI>();
+
+        CircleClue = new GameObject[3]; 
 
         if (GameObject.Find("Gate/Frame"))
         {
             Door = GameObject.Find("Gate/Frame");
             DoorAnim = Door.GetComponent<Animator>(); 
+        }
+
+        if (GameObject.Find("Puzzle/Clues/Color1"))
+        {
+            CircleClue[0] = GameObject.Find("Puzzle/Clues/Color1"); 
+        }
+
+        if (GameObject.Find("Puzzle/Clues/Color2"))
+        {
+            CircleClue[1] = GameObject.Find("Puzzle/Clues/Color2");
+        }
+
+        if (GameObject.Find("Puzzle/Clues/Color3"))
+        {
+            CircleClue[2] = GameObject.Find("Puzzle/Clues/Color3");
         }
     }
 
@@ -41,6 +61,7 @@ public class DoorColorPuzzle : MonoBehaviour
     void RandomizeColors()
     {
         List<string> ColorsInList = new List<string>();
+        List<string> ReversedAnswers = new List<string>(); 
 
         ColorsInList.Add("Color.red");
         ColorsInList.Add("Color.green");
@@ -54,6 +75,30 @@ public class DoorColorPuzzle : MonoBehaviour
 
             Debug.Log(PuzzleColorsAnswer[i]);
         }
+
+        ReversedAnswers = PuzzleColorsAnswer.Reverse().ToList();
+ 
+        for (int j = 2; j > -1; j--)
+        {
+            if (ReversedAnswers[j] == "Color.red")
+            {
+                CircleClue[j].GetComponent<SpriteRenderer>().color = Color.red;
+            }
+
+            else if (ReversedAnswers[j] == "Color.green")
+            {
+                CircleClue[j].GetComponent<SpriteRenderer>().color = Color.green;
+            }
+
+            else if (ReversedAnswers[j] == "Color.blue")
+            {
+                CircleClue[j].GetComponent<SpriteRenderer>().color = Color.blue;
+            }
+        }
+
+        Debug.Log("Reversed Color answers are: " + ReversedAnswers[0]);
+        Debug.Log("Reversed Color answers are: " + ReversedAnswers[1]);
+        Debug.Log("Reversed Color answers are: " + ReversedAnswers[2]);
     }
 
     // Update is called once per frame

@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1546,7 +1546,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf7f8494e66cd844bb71fe4b77190d7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UIPopUp: {fileID: 8997450232795726663, guid: d3b07e59ea40b5447be2ca600dd87bb2, type: 3}
+  UIPopUp: {fileID: 5054109048381230223, guid: d3b07e59ea40b5447be2ca600dd87bb2, type: 3}
   camera: {fileID: 0}
   PlayerCanMove: 0
 --- !u!50 &939600498

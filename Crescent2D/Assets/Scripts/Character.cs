@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class Character : MonoBehaviour
 {
@@ -29,6 +30,11 @@ public class Character : MonoBehaviour
     float groundCheckRadius;
     float FlingDirection;
 
+    TextMeshProUGUI Title;
+    TextMeshProUGUI Level;
+
+    public Transform UIPopUp;
+
     public int PowerUpCount; 
 
     public GameObject MainCamera;
@@ -41,6 +47,7 @@ public class Character : MonoBehaviour
     bool PlayerCanMove;
     bool HasKey;
     bool isCrouching;
+    bool UIOpen;
     public bool isDead; 
 	//-- PLAYER VARIABLES --// 
 
@@ -444,10 +451,29 @@ public class Character : MonoBehaviour
         {
             SceneManager.LoadScene("Map1");
         }
+
+        else if (collision.gameObject.tag == "Note" && UIOpen == false && GameObject.Find("NOTE") && GameObject.Find("NOTE").GetComponent<NPCMonologueTrigger>().MonologueIsOpen == false)
+        {
+            UIOpen = true;
+
+            var SpawnedUI = Instantiate(UIPopUp, new Vector3(gameObject.transform.position.x + 3.0f, gameObject.transform.position.y + 3.0f, UIPopUp.transform.position.z), gameObject.transform.rotation);
+            SpawnedUI.parent = GameObject.Find("UI").transform;
+            SpawnedUI.name = "MapUIPopUp";
+
+            Title = GameObject.Find("UI/MapUIPopUp/Panel/Title").GetComponent<TextMeshProUGUI>();
+            Level = GameObject.Find("UI/MapUIPopUp/Panel/Level").GetComponent<TextMeshProUGUI>();
+
+            Level.text = collision.gameObject.name;
+            Title.text = collision.gameObject.transform.Find("Title").GetComponent<Text>().text;
+        }
     }
 
     void OnTriggerExit2D(Collider2D collision)
     {
+      if(GameObject.Find("NOTE") && GameObject.Find("NOTE").GetComponent<NPCMonologueTrigger>().MonologueIsOpen == false)
+        Destroy(GameObject.Find("MapUIPopUp"));
+        UIOpen = false;
+
         if (collision.gameObject.tag == "Exit")
         {
             collision.gameObject.GetComponent<SpriteRenderer>().color = new Color(255.0f, 255.0f, 255.0f);
@@ -469,7 +495,7 @@ public class Character : MonoBehaviour
     {
         if (CrescentCanFollow == true)
         {
-          Crescent.transform.position = new Vector3(gameObject.transform.position.x - 2.0f, gameObject.transform.position.y + 3.0f + (Mathf.PingPong(Time.time, 1.0f) - Subtractor * NewPosition), Crescent.transform.position.z);
+          Crescent.transform.position = new Vector3(gameObject.transform.position.x - 3.5f, gameObject.transform.position.y + 3.0f + (Mathf.PingPong(Time.time, 1.0f) - Subtractor * NewPosition), Crescent.transform.position.z);
         }
     }
     //-- CRESCENT FUNCTIONS --// 
@@ -584,6 +610,8 @@ public class Character : MonoBehaviour
         if (CrescentCanMove == true)
         {
             yield return new WaitForSeconds(0.15f);
+
+            CrescentCanMove = false; 
 
             CrescentCanLight = true;
             CrescentCanFollow = true;
