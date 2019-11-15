@@ -25,7 +25,7 @@ public class FlyingGreenSlime : Enemy
     // Update is called once per frame
     void Update()
     {
-        UpdateEnemyScript();
+        UpdateProjectileEnemyScript();
 
         if (health <= 0.0f)
         {

@@ -454,6 +454,14 @@ public class Character : MonoBehaviour
         {
             collision.gameObject.GetComponent<SpriteRenderer>().color = new Color(255.0f, 0.0f, 0.0f);
         }
+
+       if (collision.gameObject.tag == "Projectile")
+        {
+            PlayerCanMove = false;
+            CameraShake();
+            StartCoroutine(Fling());
+            PlayerHealth = PlayerHealth - Random.Range(10.0f, 30.0f);        
+        }
     }
 
     void OnTriggerStay2D(Collider2D collision)
