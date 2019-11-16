@@ -123,13 +123,18 @@ public class UIButtonScript : MonoBehaviour
             ButtonPressed = true;
             Quit.animator.SetTrigger("Pressed");
             StartCoroutine(ResetButtonPress());
-            Application.Quit();
+            QuitGame(); 
         }
 
         if (InCredits == true && Input.GetKeyDown(KeyCode.JoystickButton2))
         {
             CloseCredits();
         }
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit(); 
     }
 
     public void PlayGame()
