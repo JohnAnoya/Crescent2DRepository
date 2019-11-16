@@ -17,6 +17,9 @@ public class Character : MonoBehaviour
 
     public LayerMask isGroundLayer;
     public Transform groundCheck;
+    public Transform BulletSpawn;
+
+    public Rigidbody2D Bullet; 
 
     public Image HealthBar; 
 
@@ -29,9 +32,11 @@ public class Character : MonoBehaviour
     float JumpHeight;
     float groundCheckRadius;
     float FlingDirection;
+    float projectileForce; 
 
     TextMeshProUGUI Title;
     TextMeshProUGUI Level;
+    TextMeshProUGUI Info; 
 
     public Transform UIPopUp;
 
@@ -40,16 +45,18 @@ public class Character : MonoBehaviour
     public GameObject MainCamera;
     public GameObject CameraHolder;
     public GameObject Crescent;
-    public GameObject DeathPanel; 
+    public GameObject DeathPanel;
 
+    public bool isDead;
     public bool isGrounded;
     public bool isFacingRight;
+    public bool GunnerRunnerEnabled;
     bool PlayerCanMove;
     bool playerCanInteract;
     bool HasKey;
     bool isCrouching;
     bool UIOpen;
-    public bool isDead; 
+    bool CanShootAgain;  
 	//-- PLAYER VARIABLES --// 
 
 	//-- PLAYER AUDIO --// 
@@ -91,7 +98,11 @@ public class Character : MonoBehaviour
 
     void Awake()
     {
-        DeathPanel = GameObject.Find("UI/Canvas/DeathPanelBorder"); 
+        DeathPanel = GameObject.Find("UI/Canvas/DeathPanelBorder");
+
+        if (GameObject.Find("UI/Canvas/Info")) {
+            Info = GameObject.Find("UI/Canvas/Info").GetComponent<TextMeshProUGUI>();
+        }
     }
 
 
@@ -111,13 +122,16 @@ public class Character : MonoBehaviour
         WalkSpeed = 10.0f;
         JumpHeight = 13.0f;
         groundCheckRadius = 0.1f;
+        projectileForce = 20.0f;
 
         isFacingRight = true;
         PlayerCanMove = true;
 
         HasKey = false;
         isCrouching = false;
-        isDead = false; 
+        isDead = false;
+        GunnerRunnerEnabled = false;
+        CanShootAgain = true; 
         //-- SETTING PLAYER VARIABLES --//
 
         //-- SETTING CRESCENT VARIABLES --// 
@@ -193,7 +207,7 @@ public class Character : MonoBehaviour
 			AudioManager.instance.alterPitchEffect(playerJumpSnd, playerJumpSnd);
 		}
 
-        if (Input.GetButtonDown("Submit") && playerCanInteract == true && SceneManager.GetActiveScene().buildIndex < 6)
+        if (Input.GetButtonDown("Submit") && playerCanInteract == true && SceneManager.GetActiveScene().buildIndex < 6 && SceneManager.GetActiveScene().buildIndex != 5)
         {
             Debug.Log("Map1 should be loading....");
             SceneManager.LoadScene("Map1");
@@ -242,7 +256,7 @@ public class Character : MonoBehaviour
 
 
         //-- PLAYER ATTACKING IF STATEMENTS (BOTH KEYBOARD/CONTROLLER) --// 
-        if (Input.GetButtonDown("Fire1") && isDead == false || Input.GetKey(KeyCode.Joystick1Button10) && isDead == false)
+        if (Input.GetButtonDown("Fire1") && isDead == false && CrescentCanMove == false && GunnerRunnerEnabled == false)
         {
             gameObject.transform.GetChild(1).GetComponent<BoxCollider2D>().enabled = true;
             anim.SetBool("QuickAttack", true);
@@ -250,11 +264,34 @@ public class Character : MonoBehaviour
 			StartCoroutine(DisableSwordCollider());
 			AudioManager.instance.alterPitchEffect(playerLightAttackSnd, playerLightAttackSnd);
 		}
-        //-- PLAYER ATTACKING IF STATEMENTS (BOTH KEYBOARD/CONTROLLER) --// 
+
+        else if (Input.GetButtonDown("Fire1") && isDead == false && CrescentCanMove == false && GunnerRunnerEnabled == true && CanShootAgain == true)
+        {
+            CanShootAgain = false; 
+            anim.SetTrigger("Shoot");
+            Rigidbody2D spawnBullet = Instantiate(Bullet, BulletSpawn.transform.position, BulletSpawn.transform.rotation);
+
+            Physics2D.IgnoreCollision(GetComponent<Collider2D>(),
+             spawnBullet.GetComponent<Collider2D>(), true);
+
+            if (isFacingRight)
+            {
+                spawnBullet.GetComponent<Rigidbody2D>().AddForce(BulletSpawn.right * projectileForce, ForceMode2D.Impulse);           
+            }
+
+            else
+            {
+                spawnBullet.GetComponent<SpriteRenderer>().flipX = true;
+                spawnBullet.GetComponent<Rigidbody2D>().AddForce(-BulletSpawn.right * projectileForce, ForceMode2D.Impulse);
+            }
+
+            StartCoroutine(ResetCanShootAgain());
+        }
+            //-- PLAYER ATTACKING IF STATEMENTS (BOTH KEYBOARD/CONTROLLER) --// 
 
 
-        //-- PLAYER MOVEMENT MECHANICS STATEMENTS (BOTH KEYBOARD/CONTROLLER) --// 
-        if (Input.GetKeyDown(KeyCode.F) && isFacingRight && isCrouching == false && isGrounded == false && isDead == false || Input.GetButtonDown("Dash") && isFacingRight && isCrouching == false && isGrounded == false && isDead == false)
+            //-- PLAYER MOVEMENT MECHANICS STATEMENTS (BOTH KEYBOARD/CONTROLLER) --// 
+            if (Input.GetKeyDown(KeyCode.F) && isFacingRight && isCrouching == false && isGrounded == false && isDead == false || Input.GetButtonDown("Dash") && isFacingRight && isCrouching == false && isGrounded == false && isDead == false)
         {
             Rigidbody2D DashEffectSource = Instantiate(DashEffect, gameObject.transform.position, gameObject.transform.rotation);
             DashEffectSource.transform.parent = gameObject.transform;
@@ -284,8 +321,9 @@ public class Character : MonoBehaviour
 			CameraShake();
         }
 
-        if (Input.GetKeyDown(KeyCode.R) && PowerUpCount >= 3 && isDead == false || Input.GetButtonDown("Powerup") && PowerUpCount >= 3 && isDead == false)
+        if (Input.GetKeyDown(KeyCode.R) && PowerUpCount >= 3 && isDead == false && GunnerRunnerEnabled == false || Input.GetButtonDown("Powerup") && PowerUpCount >= 3 && isDead == false && GunnerRunnerEnabled == false)
         {
+            GunnerRunnerEnabled = true;
             Debug.Log(PowerUpCount);
             Rigidbody2D PowerupEffectSource = Instantiate(PowerupEffect, gameObject.transform.position, gameObject.transform.rotation);
             PowerupEffectSource.transform.parent = gameObject.transform;
@@ -412,9 +450,14 @@ public class Character : MonoBehaviour
             PlayerHealth = PlayerHealth - TakeDamage;
         }
 
-        else if (collision.gameObject.tag == "LevelExit" && SceneManager.GetActiveScene().buildIndex < 6)
+        else if (collision.gameObject.tag == "LevelExit" && SceneManager.GetActiveScene().buildIndex < 6 && SceneManager.GetActiveScene().buildIndex != 5)
         {
             SceneManager.LoadScene("Map1");
+        }
+
+        else if (collision.gameObject.tag == "LevelExit" && SceneManager.GetActiveScene().buildIndex < 6 && SceneManager.GetActiveScene().buildIndex == 5)
+        {
+            SceneManager.LoadScene("End");
         }
 
         else if (collision.gameObject.tag == "HealthCollectible")
@@ -450,7 +493,12 @@ public class Character : MonoBehaviour
             SceneManager.LoadScene("Map1");
         }
 
-       if (collision.gameObject.tag == "Exit")
+        else if (collision.gameObject.tag == "LockedDoor" && HasKey == false && SceneManager.GetActiveScene().buildIndex < 6)
+        {
+            Info.text = "Door is locked (you need a key!)";
+        }
+
+        if (collision.gameObject.tag == "Exit")
         {
             collision.gameObject.GetComponent<SpriteRenderer>().color = new Color(255.0f, 0.0f, 0.0f);
         }
@@ -461,6 +509,14 @@ public class Character : MonoBehaviour
             CameraShake();
             StartCoroutine(Fling());
             PlayerHealth = PlayerHealth - Random.Range(10.0f, 30.0f);        
+        }
+
+        if (collision.gameObject.tag == "Parry" && GameObject.Find("Player/Sword").GetComponent<BoxCollider2D>().enabled == false && SceneManager.GetActiveScene().buildIndex != 3)
+        {
+            PlayerCanMove = false;
+            CameraShake();
+            StartCoroutine(Fling());
+            PlayerHealth = PlayerHealth - Random.Range(10.0f, 30.0f);
         }
     }
 
@@ -497,7 +553,12 @@ public class Character : MonoBehaviour
         {
             collision.gameObject.GetComponent<SpriteRenderer>().color = new Color(255.0f, 255.0f, 255.0f);
             playerCanInteract = false;
-        }   
+        }
+
+        if (collision.gameObject.tag == "LockedDoor" && HasKey == false && SceneManager.GetActiveScene().buildIndex < 6)
+        {
+            Info.text = "";
+        }
     }
 
     // flips the sprite when player walks left
@@ -650,6 +711,13 @@ public class Character : MonoBehaviour
         CameraShake();
         PowerUpCount = 0;
         anim.runtimeAnimatorController = Resources.Load("Animations/Player") as RuntimeAnimatorController;
+        GunnerRunnerEnabled = false; 
+    }
+
+    IEnumerator ResetCanShootAgain()
+    {
+        yield return new WaitForSeconds(0.25f);
+        CanShootAgain = true;
     }
     //-- COROUTINES --// 
 

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BlackCat : Enemy
 {
-    Animator anim;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,7 +13,6 @@ public class BlackCat : Enemy
         initialPos.x = gameObject.transform.position.x;
         initialPos.y = gameObject.transform.position.y;
 
-        anim = GetComponent<Animator>();
         StartEnemyScript();
     }
 

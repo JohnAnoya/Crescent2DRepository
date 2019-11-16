@@ -42,6 +42,7 @@ TagManager:
   - Spikes
   - Note
   - Projectile
+  - Bullet
   layers:
   - Default
   - TransparentFX

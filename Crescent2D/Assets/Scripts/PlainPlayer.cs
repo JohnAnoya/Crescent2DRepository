@@ -15,7 +15,11 @@ public class PlainPlayer : MonoBehaviour
     public Transform UIPopUp;
     public Transform camera;
 
+    public GameObject Crescent;
+
     float WalkSpeed;
+    float NewPosition;
+    const float Subtractor = 1.5f; 
 
     bool UIOpen;
     bool CameraFollowPlayer;
@@ -23,6 +27,7 @@ public class PlainPlayer : MonoBehaviour
     bool playerCanInteract;
     bool playerCanEnterTutorial; 
     bool isFacingRight;
+    bool CrescentCanFollow; 
 
     void Awake()
     {
@@ -38,6 +43,14 @@ public class PlainPlayer : MonoBehaviour
         CameraFollowPlayer = true;
         PlayerCanMove = true;
         isFacingRight = true;
+
+        NewPosition = 1.0f; 
+
+        if (!Crescent)
+        {
+            Crescent = GameObject.Find("Crescent");
+            CrescentCanFollow = true; 
+        }
     }
 
     // Update is called once per frame
@@ -74,7 +87,17 @@ public class PlainPlayer : MonoBehaviour
             SceneManager.LoadScene("Tutorial");
         }
 
+
+            CrescentFollow();
             CameraFollow();
+    }
+
+    void CrescentFollow()
+    {
+        if (CrescentCanFollow == true)
+        {
+            Crescent.transform.position = new Vector3(gameObject.transform.position.x - 3.5f, gameObject.transform.position.y + 3.0f + (Mathf.PingPong(Time.time, 1.0f) - Subtractor * NewPosition), Crescent.transform.position.z);
+        }
     }
 
     void CameraFollow()

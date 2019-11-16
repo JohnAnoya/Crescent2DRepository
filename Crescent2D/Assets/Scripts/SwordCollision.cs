@@ -24,7 +24,7 @@ public class SwordCollision : MonoBehaviour
         {
           Destroy(collision.gameObject);
 
-            if (GameObject.Find("Player").GetComponent<Character>().PowerUpCount < 4)
+            if (GameObject.Find("Player").GetComponent<Character>().PowerUpCount < 4 && GameObject.Find("Player").GetComponent<Character>().GunnerRunnerEnabled == false)
             {
                 GameObject.Find("Player").GetComponent<Character>().PowerUpCount += 1;
             }

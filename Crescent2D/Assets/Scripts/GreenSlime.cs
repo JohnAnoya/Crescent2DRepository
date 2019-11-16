@@ -5,8 +5,6 @@ using UnityEngine;
 public class GreenSlime : Enemy
 {
 	public AudioClip slimeHitSnd;
-
-    Animator anim; 
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +14,6 @@ public class GreenSlime : Enemy
         initialPos.x = gameObject.transform.position.x;
         initialPos.y = gameObject.transform.position.y;
 
-        anim = GetComponent<Animator>();
         StartEnemyScript();
     }
 

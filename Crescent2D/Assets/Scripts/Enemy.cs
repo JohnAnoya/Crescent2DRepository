@@ -222,17 +222,17 @@ abstract public class Enemy : MonoBehaviour
             gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, initialPos, 1.0f * speed * Time.deltaTime);
         }
 
-        if (ProjectileEnemyCanAttack == true && projectileEnemyAttackDecider <= 50.0f)
+        if (ProjectileEnemyCanAttack == true && projectileEnemyAttackDecider <= 30.0f)
         {
             GroundAttack();
         }
 
-        else if (ProjectileEnemyCanAttack == true && projectileEnemyAttackDecider > 50.0f && projectileEnemyAttackDecider < 85.0f)
+        else if (ProjectileEnemyCanAttack == true && projectileEnemyAttackDecider > 30.0f && projectileEnemyAttackDecider < 65.0f)
         {
             NormalProjectileAttack(); 
         }
 
-        else if (ProjectileEnemyCanAttack == true && projectileEnemyAttackDecider > 85.0f)
+        else if (ProjectileEnemyCanAttack == true && projectileEnemyAttackDecider > 65.0f)
         {
             ParryProjectileAttack();
         }
@@ -261,6 +261,13 @@ abstract public class Enemy : MonoBehaviour
         if (collision.gameObject.tag == "BasicSwordAttack")
         {
             health = health - Random.Range(5.0f, 20.0f);
+            anim.SetTrigger("Hit");
+            StartCoroutine(EnemyFling());
+        }
+
+        else if (collision.gameObject.tag == "Bullet")
+        {
+            health = health - Random.Range(15.0f, 35.0f);
             anim.SetTrigger("Hit");
             StartCoroutine(EnemyFling());
         }

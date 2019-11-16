@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Spider : Enemy
 {
-    Animator anim;
+  
     // Start is called before the first frame update
     void Start()
     {
@@ -14,7 +14,6 @@ public class Spider : Enemy
         initialPos.x = gameObject.transform.position.x;
         initialPos.y = gameObject.transform.position.y;
 
-        anim = GetComponent<Animator>();
         StartEnemyScript();
     }
 
