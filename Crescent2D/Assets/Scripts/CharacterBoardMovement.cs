@@ -16,6 +16,10 @@ public class CharacterBoardMovement : MonoBehaviour
     float WalkSpeed;
 
     bool UIOpen;
+    bool CanEnterLevel;
+    bool CanEnterTutorial;
+
+    string SceneToLoad; 
 
     void Awake()
     {
@@ -27,7 +31,9 @@ public class CharacterBoardMovement : MonoBehaviour
     {
         Time.timeScale = 1.0f;
         WalkSpeed = 12.0f;
-        UIOpen = false; 
+        UIOpen = false;
+        CanEnterLevel = false;
+        CanEnterTutorial = false; 
     }
 
     // Update is called once per frame
@@ -35,6 +41,16 @@ public class CharacterBoardMovement : MonoBehaviour
     {
         Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0.0f);
         transform.position += movement * WalkSpeed * Time.deltaTime;
+
+        if (CanEnterLevel == true && Input.GetButtonDown("Submit"))
+        {
+            SceneManager.LoadScene(SceneToLoad);
+        }
+
+        else if (CanEnterTutorial == true && Input.GetButtonDown("Submit"))
+        {
+            SceneManager.LoadScene("Tutorial");
+        }
     }
 
     void OnTriggerStay2D(Collider2D collision)
@@ -55,20 +71,23 @@ public class CharacterBoardMovement : MonoBehaviour
         }
 
 
-        if (collision.tag == "Level" && Input.GetButtonDown("Submit") || collision.tag == "Level" && Input.GetKey(KeyCode.Return))
+        if (collision.tag == "Level")
         {
+            CanEnterLevel = true; 
             Debug.Log("Player hit Enter");
-            SceneManager.LoadScene(collision.gameObject.name);
+            SceneToLoad = collision.gameObject.name;
         }
 
-       else if (collision.tag == "Tutorial" && Input.GetButtonDown("Submit") || collision.tag == "Tutorial" && Input.GetKey(KeyCode.Return))
+       else if (collision.tag == "Tutorial")
         {
-           SceneManager.LoadScene("Tutorial");
+            CanEnterTutorial = true; 
         }
     }
 
     void OnTriggerExit2D(Collider2D collision)
     {
+        CanEnterTutorial = false;
+        CanEnterLevel = false; 
         Destroy(GameObject.Find("MapUIPopUp"));
         UIOpen = false; 
     }

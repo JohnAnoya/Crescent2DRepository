@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6664548810075679329}
   - component: {fileID: 6001632749479191151}
   - component: {fileID: 4330443073583998408}
+  - component: {fileID: 2287493235761902694}
   m_Layer: 0
   m_Name: HealthCollectible
   m_TagString: HealthCollectible
@@ -159,3 +160,15 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.99999994, y: 0.99999994}
   m_Direction: 0
+--- !u!114 &2287493235761902694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2650964498264093695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90a42bfcad6ace14aa55d9a9a9d5ae0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
