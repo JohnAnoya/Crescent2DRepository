@@ -70,6 +70,7 @@ public class Character : MonoBehaviour
 
 	public AudioClip playerLootSnd;
 
+	public AudioClip playerShootSnd;
 	private bool audioPlayed;
 
     //-- PLAYER AUDIO --//
@@ -267,8 +268,9 @@ public class Character : MonoBehaviour
 
         else if (Input.GetButtonDown("Fire1") && isDead == false && CrescentCanMove == false && GunnerRunnerEnabled == true && CanShootAgain == true)
         {
-            CanShootAgain = false; 
-            anim.SetTrigger("Shoot");
+            CanShootAgain = false;
+			anim.SetTrigger("Shoot");
+			AudioManager.instance.alterPitchEffect(playerShootSnd, playerShootSnd);
             Rigidbody2D spawnBullet = Instantiate(Bullet, BulletSpawn.transform.position, BulletSpawn.transform.rotation);
 
             Physics2D.IgnoreCollision(GetComponent<Collider2D>(),
@@ -298,7 +300,7 @@ public class Character : MonoBehaviour
 
             rb.velocity = new Vector2(10.5f, 0.0f);
 
-			AudioManager.instance.PlayAudioClip(playerDashSnd);
+			AudioManager.instance.alterPitchEffect(playerDashSnd, playerDashSnd);
 
 			ShakeDuration = 0.4f;
             ShakeMagnitude = 0.12f;
@@ -313,7 +315,7 @@ public class Character : MonoBehaviour
 
             rb.velocity = new Vector2(-10.5f, 0.0f);
 
-			AudioManager.instance.PlayAudioClip(playerDashSnd);
+			AudioManager.instance.alterPitchEffect(playerDashSnd, playerDashSnd);
 
 			ShakeDuration = 0.4f;
 			ShakeMagnitude = 0.12f;

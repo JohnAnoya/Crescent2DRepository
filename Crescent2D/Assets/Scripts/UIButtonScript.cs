@@ -18,16 +18,21 @@ public class UIButtonScript : MonoBehaviour
     GameObject PlayPanel;
     GameObject CreditPanel;
 
-    ParticleSystem Particles; 
+    ParticleSystem Particles;
 
+	public AudioClip buttonClickSnd;
+	public AudioClip buttonBackSnd;
+	public AudioClip selectionMoveSnd;
+	private bool audioPlayed;
 
     // Start is called before the first frame update
     void Start()
     {
         currenslection = 1;
-        CanSelect = true;
+		CanSelect = true;
         ButtonPressed = false;
-        InCredits = false; 
+        InCredits = false;
+		audioPlayed = false;
 
         if (GameObject.Find("UI/Canvas/MainPanel/Buttons/Play")) {
             Play = GameObject.Find("UI/Canvas/MainPanel/Buttons/Play").GetComponent<Button>();
@@ -62,8 +67,12 @@ public class UIButtonScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float moveDirection = Input.GetAxisRaw("Vertical");
-        if (moveDirection == -1 && currenslection < 3 && CanSelect == true && ButtonPressed == false)
+
+		float moveDirection = Input.GetAxisRaw("Vertical");
+
+		menuCursorMoveSounds(moveDirection, CanSelect);
+
+		if (moveDirection == -1 && currenslection < 3 && CanSelect == true && ButtonPressed == false)
         {
             CanSelect = false;
             currenslection += 1;
@@ -81,38 +90,52 @@ public class UIButtonScript : MonoBehaviour
 
         if (currenslection == 1 && ButtonPressed == false)
         {
+
             Quit.animator.SetTrigger("Normal");
             Credits.animator.SetTrigger("Normal");
             Play.animator.SetTrigger("Highlighted");
-        }
 
-        else if (currenslection == 2 && ButtonPressed == false)
+
+		}
+
+		else if (currenslection == 2 && ButtonPressed == false)
         {
-            Quit.animator.SetTrigger("Normal");
+
+			Quit.animator.SetTrigger("Normal");
             Play.animator.SetTrigger("Normal");
             Credits.animator.SetTrigger("Highlighted");
-        }
 
-        else if (currenslection == 3 && ButtonPressed == false)
+
+		}
+
+		else if (currenslection == 3 && ButtonPressed == false)
         {
+
             Play.animator.SetTrigger("Normal");
             Credits.animator.SetTrigger("Normal");
             Quit.animator.SetTrigger("Highlighted");
-        }
 
-        if (currenslection == 1 && Input.GetButtonDown("Submit") && ButtonPressed == false && InCredits == false)
+		}
+
+		if (currenslection == 1 && Input.GetButtonDown("Submit") && ButtonPressed == false && InCredits == false)
         {
             ButtonPressed = true;
             Play.animator.SetTrigger("Pressed");
-            StartCoroutine(ResetButtonPress());
+
+			AudioManager.instance.alterPitchEffect(buttonClickSnd, buttonClickSnd);
+
+			StartCoroutine(ResetButtonPress());
             PlayGame();
         }
 
         else if (currenslection == 2 && Input.GetButtonDown("Submit") && ButtonPressed == false)
         {
             ButtonPressed = true;
-            InCredits = true; 
-            Credits.animator.SetTrigger("Pressed");
+            InCredits = true;
+
+			AudioManager.instance.alterPitchEffect(buttonClickSnd, buttonClickSnd);
+
+			Credits.animator.SetTrigger("Pressed");
             StartCoroutine(ResetButtonPress());
             OpenCredits();
 
@@ -122,13 +145,16 @@ public class UIButtonScript : MonoBehaviour
         {
             ButtonPressed = true;
             Quit.animator.SetTrigger("Pressed");
-            StartCoroutine(ResetButtonPress());
+
+			AudioManager.instance.alterPitchEffect(buttonClickSnd, buttonClickSnd);
+
+			StartCoroutine(ResetButtonPress());
             QuitGame(); 
         }
 
         if (InCredits == true && Input.GetKeyDown(KeyCode.JoystickButton2))
         {
-            CloseCredits();
+			CloseCredits();
         }
     }
 
@@ -152,7 +178,10 @@ public class UIButtonScript : MonoBehaviour
     public void CloseCredits()
     {
         CreditPanel.GetComponent<Animator>().SetTrigger("UnSlide");
-        Particles.Play();
+
+		AudioManager.instance.alterPitchEffect(buttonBackSnd);
+
+		Particles.Play();
         InCredits = false;
     }
     
@@ -177,4 +206,16 @@ public class UIButtonScript : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         CanSelect = true;
     }
+
+	void menuCursorMoveSounds(float moveDir, bool selectionState)
+	{
+
+		if (moveDir != 0 && !InCredits && !selectionState && !audioPlayed)
+		{
+			audioPlayed = true;
+			AudioManager.instance.alterPitchEffect(selectionMoveSnd);
+			audioPlayed = false;
+		}
+	}
+
 }
