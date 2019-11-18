@@ -1177,6 +1177,90 @@ CapsuleCollider2D:
   m_Offset: {x: 0.10467136, y: -0.10371281}
   m_Size: {x: 1.7734711, y: 1.7560737}
   m_Direction: 0
+--- !u!1001 &848153626
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6845815300448722867, guid: 5302de5d0ef23fc48b3325798a4d7be1,
+        type: 3}
+      propertyPath: m_Name
+      value: AudioManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 6845815300448722863, guid: 5302de5d0ef23fc48b3325798a4d7be1,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -198.11525
+      objectReference: {fileID: 0}
+    - target: {fileID: 6845815300448722863, guid: 5302de5d0ef23fc48b3325798a4d7be1,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.2336895
+      objectReference: {fileID: 0}
+    - target: {fileID: 6845815300448722863, guid: 5302de5d0ef23fc48b3325798a4d7be1,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -14.631891
+      objectReference: {fileID: 0}
+    - target: {fileID: 6845815300448722863, guid: 5302de5d0ef23fc48b3325798a4d7be1,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6845815300448722863, guid: 5302de5d0ef23fc48b3325798a4d7be1,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6845815300448722863, guid: 5302de5d0ef23fc48b3325798a4d7be1,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6845815300448722863, guid: 5302de5d0ef23fc48b3325798a4d7be1,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6845815300448722863, guid: 5302de5d0ef23fc48b3325798a4d7be1,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6845815300448722863, guid: 5302de5d0ef23fc48b3325798a4d7be1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6845815300448722863, guid: 5302de5d0ef23fc48b3325798a4d7be1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6845815300448722863, guid: 5302de5d0ef23fc48b3325798a4d7be1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6845815300448722862, guid: 5302de5d0ef23fc48b3325798a4d7be1,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6845815300448722865, guid: 5302de5d0ef23fc48b3325798a4d7be1,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 85ef1215722c41a4881caf3394188bcc, type: 3}
+    - target: {fileID: 6845815300448722865, guid: 5302de5d0ef23fc48b3325798a4d7be1,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5302de5d0ef23fc48b3325798a4d7be1, type: 3}
 --- !u!1 &856096591
 GameObject:
   m_ObjectHideFlags: 0
@@ -2173,14 +2257,14 @@ MonoBehaviour:
   monologue:
     NPCName: GRANDPA
     Sentences:
-    - Well, if it isn't my grandson Lua! Who would this little guy be next to you?
+    - Well, if it isn't my grandson Lua! Who would this little guy next to you be?
     - 'Huh, Crescent you say? Crescent and Lua... you two sound like a great team! '
     - 'I assume you read my journal I left in the attic. In that case, you must already
       know what has been going on as of late.   '
     - 'We need to defend the world from Python and his minions... even if it results
       in a skirmish. '
-    - 'Before you head on out make sure you familarize yourself with combat. You can
-      use my Training Grounds I have conveniently built in my house to do so. '
+    - 'Before you head on out, make sure you familarize yourself with combat. You
+      can use my Training Grounds I have conveniently built in my house to do so. '
     - Remember to stay safe!
   MainMonologuePanel: {fileID: 0}
   FindPlayer: {fileID: 0}
