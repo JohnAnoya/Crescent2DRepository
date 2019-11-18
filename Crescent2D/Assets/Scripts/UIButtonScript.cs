@@ -27,7 +27,10 @@ public class UIButtonScript : MonoBehaviour
         currenslection = 1;
         CanSelect = true;
         ButtonPressed = false;
-        InCredits = false; 
+        InCredits = false;
+
+        // Toggle fullscreen
+        Screen.fullScreen = !Screen.fullScreen;
 
         if (GameObject.Find("UI/Canvas/MainPanel/Buttons/Play")) {
             Play = GameObject.Find("UI/Canvas/MainPanel/Buttons/Play").GetComponent<Button>();
