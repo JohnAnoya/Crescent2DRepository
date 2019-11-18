@@ -340,11 +340,10 @@ public class Character : MonoBehaviour
 
 
         //-- CRESCENT LIGHT TRANSFORM IF STATEMENTS (BOTH KEYBOARD/CONTROLLER) --// 
-        if (Input.GetKey(KeyCode.V) && CrescentCanLight == true && isDead == false || Input.GetButtonDown("CrescentTransform") && CrescentCanLight == true && isDead == false)
+        if (Input.GetKeyDown(KeyCode.V) && CrescentCanLight == true && isDead == false || Input.GetButtonDown("CrescentTransform") && CrescentCanLight == true && isDead == false)
         {
-            CrescentCanLight = false;
             CrescentCanFollow = false;
-
+            CrescentCanLight = false;
             CameraFollowPlayer = false;
             CameraFollowCrescent = true; 
 
@@ -358,7 +357,7 @@ public class Character : MonoBehaviour
             CameraShake();
         }
 
-        else if (Input.GetKey(KeyCode.V) && CrescentCanLight == false && isDead == false || Input.GetButtonDown("CrescentTransform") && CrescentCanLight == false && isDead == false)
+        else if (Input.GetKeyDown(KeyCode.V) && CrescentCanLight == false && isDead == false || Input.GetButtonDown("CrescentTransform") && CrescentCanLight == false && isDead == false)
         {
             StartCoroutine(StopCrescentLight());
         }
