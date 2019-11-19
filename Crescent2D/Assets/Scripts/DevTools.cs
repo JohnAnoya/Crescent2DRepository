@@ -7,7 +7,8 @@ public class DevTools : MonoBehaviour
 {
 	private bool devMode;
 
-	protected int desiredLevelIndex;
+	[SerializeField]
+	private int desiredLevelIndex;
 
 	private void Start()
 	{
@@ -16,12 +17,12 @@ public class DevTools : MonoBehaviour
 	}
 
 	// Update is called once per frame
-	void FixedUpdate()
+	void Update()
     {
 		ResetGame();
     }
 
-	protected void ResetGame()
+	private void ResetGame()
 	{
 		if (devMode && Input.GetKeyDown(KeyCode.O))
 		{
