@@ -200,7 +200,7 @@ public class Character : MonoBehaviour
 			flip();
 		}
 
-		if (Input.GetButtonDown("Jump") && isGrounded == true && isDead == false)
+		if (Input.GetButtonDown("Jump") && isGrounded == true && isDead == false && PlayerCanMove == true)
         {
             Debug.Log("Is Jumping lol");
             anim.Play("PlayerJump");
@@ -289,11 +289,11 @@ public class Character : MonoBehaviour
 
             StartCoroutine(ResetCanShootAgain());
         }
-            //-- PLAYER ATTACKING IF STATEMENTS (BOTH KEYBOARD/CONTROLLER) --// 
+        //-- PLAYER ATTACKING IF STATEMENTS (BOTH KEYBOARD/CONTROLLER) --// 
 
 
-            //-- PLAYER MOVEMENT MECHANICS STATEMENTS (BOTH KEYBOARD/CONTROLLER) --// 
-            if (Input.GetKeyDown(KeyCode.F) && isFacingRight && isCrouching == false && isGrounded == false && isDead == false || Input.GetButtonDown("Dash") && isFacingRight && isCrouching == false && isGrounded == false && isDead == false)
+        //-- PLAYER MOVEMENT MECHANICS STATEMENTS (BOTH KEYBOARD/CONTROLLER) --// 
+        if (Input.GetKeyDown(KeyCode.F) && isFacingRight && isCrouching == false && isGrounded == false && isDead == false && PlayerCanMove == true || Input.GetButtonDown("Dash") && isFacingRight && isCrouching == false && isGrounded == false && isDead == false && PlayerCanMove == true)
         {
             Rigidbody2D DashEffectSource = Instantiate(DashEffect, gameObject.transform.position, gameObject.transform.rotation);
             DashEffectSource.transform.parent = gameObject.transform;
@@ -308,7 +308,7 @@ public class Character : MonoBehaviour
             CameraShake();
         }
 
-        else if (Input.GetKeyDown(KeyCode.F) && !isFacingRight && isCrouching == false && isGrounded == false && isDead == false || Input.GetButtonDown("Dash") && !isFacingRight && isCrouching == false && isGrounded == false && isDead == false)
+        else if (Input.GetKeyDown(KeyCode.F) && !isFacingRight && isCrouching == false && isGrounded == false && isDead == false && PlayerCanMove == true || Input.GetButtonDown("Dash") && !isFacingRight && isCrouching == false && isGrounded == false && isDead == false && PlayerCanMove == true)
         {
             Rigidbody2D DashEffectSource = Instantiate(DashEffect, gameObject.transform.position, gameObject.transform.rotation);
             DashEffectSource.transform.parent = gameObject.transform;
@@ -323,7 +323,7 @@ public class Character : MonoBehaviour
 			CameraShake();
         }
 
-        if (Input.GetKeyDown(KeyCode.R) && PowerUpCount >= 3 && isDead == false && GunnerRunnerEnabled == false || Input.GetButtonDown("Powerup") && PowerUpCount >= 3 && isDead == false && GunnerRunnerEnabled == false)
+        if (Input.GetKeyDown(KeyCode.R) && PowerUpCount >= 3 && isDead == false && GunnerRunnerEnabled == false && PlayerCanMove == true || Input.GetButtonDown("Powerup") && PowerUpCount >= 3 && isDead == false && GunnerRunnerEnabled == false && PlayerCanMove == true)
         {
             GunnerRunnerEnabled = true;
             Debug.Log(PowerUpCount);
