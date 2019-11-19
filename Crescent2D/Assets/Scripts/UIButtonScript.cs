@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class UIButtonScript : MonoBehaviour
 {
-    public int currenslection;
+    public int currentselection;
     bool CanSelect;
     bool ButtonPressed;
     bool InCredits; 
@@ -28,7 +28,7 @@ public class UIButtonScript : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
     {
-        currenslection = 1;
+        currentselection = 1;
         CanSelect = true;
         ButtonPressed = false;
         InCredits = false;
@@ -74,44 +74,44 @@ public class UIButtonScript : MonoBehaviour
 
 		menuCursorMoveSounds(moveDirection, CanSelect);
 
-		if (moveDirection == -1 && currenslection < 3 && CanSelect == true && ButtonPressed == false)
+		if (moveDirection == -1 && currentselection < 3 && CanSelect == true && ButtonPressed == false)
         {
             CanSelect = false;
-            currenslection += 1;
-            Debug.Log(currenslection);
+            currentselection += 1;
+            Debug.Log(currentselection);
 			StartCoroutine(ResetCanSelect());
         }
 
-        else if (moveDirection == 1 && currenslection > 1 && CanSelect == true && ButtonPressed == false && InCredits == false)
+        else if (moveDirection == 1 && currentselection > 1 && CanSelect == true && ButtonPressed == false && InCredits == false)
         {
             CanSelect = false;
-            currenslection -= 1;
-            Debug.Log(currenslection);
+            currentselection -= 1;
+            Debug.Log(currentselection);
             StartCoroutine(ResetCanSelect());
         }
 
-        if (currenslection == 1 && ButtonPressed == false)
+        if (currentselection == 1 && ButtonPressed == false)
         {
             Quit.animator.SetTrigger("Normal");
             Credits.animator.SetTrigger("Normal");
             Play.animator.SetTrigger("Highlighted");
         }
 
-        else if (currenslection == 2 && ButtonPressed == false)
+        else if (currentselection == 2 && ButtonPressed == false)
         {
             Quit.animator.SetTrigger("Normal");
             Play.animator.SetTrigger("Normal");
             Credits.animator.SetTrigger("Highlighted");
         }
 
-        else if (currenslection == 3 && ButtonPressed == false)
+        else if (currentselection == 3 && ButtonPressed == false)
         {
             Play.animator.SetTrigger("Normal");
             Credits.animator.SetTrigger("Normal");
             Quit.animator.SetTrigger("Highlighted");
         }
 
-        if (currenslection == 1 && Input.GetButtonDown("Submit") && ButtonPressed == false && InCredits == false)
+        if (currentselection == 1 && Input.GetButtonDown("Submit") && ButtonPressed == false && InCredits == false)
         {
             ButtonPressed = true;
             Play.animator.SetTrigger("Pressed");
@@ -122,7 +122,7 @@ public class UIButtonScript : MonoBehaviour
 			PlayGame();
         }
 
-        else if (currenslection == 2 && Input.GetButtonDown("Submit") && ButtonPressed == false)
+        else if (currentselection == 2 && Input.GetButtonDown("Submit") && ButtonPressed == false)
         {
             ButtonPressed = true;
             InCredits = true;
@@ -135,7 +135,7 @@ public class UIButtonScript : MonoBehaviour
 
         }
 
-        else if (currenslection == 3 && Input.GetButtonDown("Submit") && ButtonPressed == false && InCredits == false)
+        else if (currentselection == 3 && Input.GetButtonDown("Submit") && ButtonPressed == false && InCredits == false)
         {
             ButtonPressed = true;
             Quit.animator.SetTrigger("Pressed");
