@@ -34,9 +34,6 @@ public class UIButtonScript : MonoBehaviour
         InCredits = false;
 		audioPlayed = false;
 
-		// Toggle fullscreen
-		Screen.fullScreen = !Screen.fullScreen;
-
         if (GameObject.Find("UI/Canvas/MainPanel/Buttons/Play")) {
             Play = GameObject.Find("UI/Canvas/MainPanel/Buttons/Play").GetComponent<Button>();
         }
