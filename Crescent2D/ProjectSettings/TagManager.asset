@@ -101,6 +101,9 @@ TagManager:
   - name: Crescent
     uniqueID: 2029260923
     locked: 0
+  - name: Clues
+    uniqueID: 274973217
+    locked: 0
   - name: Player
     uniqueID: 1442139943
     locked: 0
