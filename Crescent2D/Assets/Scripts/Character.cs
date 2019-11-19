@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 
+
 public class Character : MonoBehaviour
 {
 
@@ -400,7 +401,8 @@ public class Character : MonoBehaviour
         {
             isFacingRight = true;  
         }
-    }
+
+	}
 
 
      void OnCollisionEnter2D(Collision2D collision)
